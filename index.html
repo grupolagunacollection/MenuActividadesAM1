@@ -1,879 +1,159 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lagoona Bacalar | Curated Vacation Homes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-    --teal: #0e4a45;
-    --teal-light: #1a7a72;
-    --gold: #b8955a;
-    --gold-light: #d4b57a;
-    --sand: #f5f2ed;
-    --sand-dark: #e0dcd5;
-    --muted: #6b6b6b;
-    --white: #ffffff;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Jost', sans-serif; background: var(--sand); color: var(--teal); line-height: 1.6; }
-h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; }
-img { max-width: 100%; height: auto; display: block; }
-a { text-decoration: none; color: inherit; transition: all .25s; }
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.section-intro { text-align: center; margin-bottom: 48px; }
-.section-label { font-size: 11px; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; text-transform: uppercase; }
-.section-title { font-size: clamp(32px, 5vw, 48px); margin-bottom: 16px; color: var(--teal); }
-.section-desc { font-size: 16px; color: var(--muted); max-width: 700px; margin: 0 auto; line-height: 1.7; }
-.reveal { opacity: 0; transform: translateY(20px); transition: all .6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* NAV */
-.navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(14, 74, 69, .95); backdrop-filter: blur(10px); padding: 16px 0; transition: all .3s; }
-.nav-inner { display: flex; justify-content: space-between; align-items: center; }
-.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--white); letter-spacing: .1em; }
-.nav-right { display: flex; align-items: center; gap: 16px; }
-.nav-tabs { display: flex; gap: 0; border: 1px solid rgba(184, 149, 90, .25); }
-.nav-tab-btn { font-size: 11px; background: transparent; border: none; color: rgba(255, 255, 255, .5); font-family: 'Jost', sans-serif; letter-spacing: .22em; text-transform: uppercase; padding: 9px 16px; cursor: pointer; transition: all .25s; white-space: nowrap; }
-.nav-tab-btn.active { background: rgba(184, 149, 90, .15); color: var(--gold-light); }
-.nav-tab-btn:hover:not(.active) { color: rgba(255, 255, 255, .8); }
-.nav-links { display: flex; gap: 2px; flex-wrap: wrap; }
-.nav-links a { color: rgba(255, 255, 255, .55); text-decoration: none; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 8px 11px; transition: all .25s; }
-.nav-links a:hover { color: var(--gold-light); background: rgba(184, 149, 90, .1); }
-.nav-reserve { background: var(--gold) !important; color: #fff !important; padding: 8px 16px !important; }
-.nav-reserve:hover { background: var(--gold-light) !important; }
-
-/* PAGE VIEWS */
-.page-view { display: none; padding-top: 80px; }
-.page-view.active { display: block; }
-
-/* HERO */
-.welcome-strip { background: var(--teal); padding: 52px 20px; text-align: center; position: relative; overflow: hidden; }
-.hero-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #0e4a45, #1a7a72); opacity: .1; }
-.hero-content { position: relative; z-index: 1; }
-.hero-eyebrow { font-size: 11px; letter-spacing: .25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 12px; }
-.hero-brand { font-family: 'Cormorant Garamond', serif; font-size: clamp(42px, 8vw, 64px); color: var(--white); margin-bottom: 16px; }
-.hero-sub { font-size: 16px; color: rgba(255, 255, 255, .8); max-width: 600px; margin: 0 auto; }
-
-/* HUB GRID */
-.hub-section { padding: 32px 40px 40px; }
-.hub-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; max-width: 1200px; margin: 0 auto; }
-.hub-card { background: #fff; border-radius: 4px; overflow: hidden; cursor: pointer; transition: transform .25s, box-shadow .25s; box-shadow: 0 2px 12px rgba(26, 74, 74, 0.08); }
-.hub-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(26, 74, 74, 0.15); }
-.hub-photo { height: 140px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.hub-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-.hub-card:hover .hub-photo img { transform: scale(1.05); }
-.hub-photo-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: .7; }
-.hub-photo-placeholder span { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.7); }
-.hub-info { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: #fff; }
-.hub-icon { font-size: 20px; flex-shrink: 0; }
-.hub-name { font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; color: var(--teal); letter-spacing: .02em; margin: 0 0 2px; }
-.hub-sub { font-size: 11px; color: var(--muted); margin: 0; line-height: 1.3; }
-.hub-arrow { margin-left: auto; flex-shrink: 0; color: var(--gold); opacity: .6; }
-
-/* SERVICE PAGE */
-.service-page { padding: 48px 40px; max-width: 1200px; margin: 0 auto; }
-.service-page-header { margin-bottom: 40px; }
-.service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.service-card { background: #fff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 12px rgba(26, 74, 74, 0.06); }
-.service-card-photo { height: 220px; background: var(--sand-dark); position: relative; overflow: hidden; }
-.service-card-photo img { width: 100%; height: 100%; object-fit: cover; }
-.service-card-photo-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--muted); }
-.service-card-body { padding: 24px; }
-.service-card-icon { font-size: 28px; margin-bottom: 12px; }
-.service-card-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--teal); margin-bottom: 10px; }
-.service-card-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
-.service-avail { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); font-weight: 400; }
-.service-avail::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-.service-wa-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--teal); color: #fff; padding: 10px 20px; font-family: 'Jost', sans-serif; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; border: none; cursor: pointer; transition: background .2s; margin-top: 8px; }
-.service-wa-btn:hover { background: #2d7a7a; }
-.service-coming-soon { background: rgba(184, 149, 90, 0.08); border: 1px solid rgba(184, 149, 90, 0.25); border-radius: 4px; padding: 24px 28px; display: flex; align-items: center; gap: 16px; margin-top: 8px; }
-.service-coming-soon svg { flex-shrink: 0; color: var(--gold); opacity: .7; }
-
-/* DELIVERY */
-.delivery-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 32px; }
-.delivery-card { background: #fff; border-radius: 4px; padding: 24px 28px; box-shadow: 0 2px 12px rgba(26, 74, 74, 0.07); display: flex; gap: 18px; align-items: flex-start; }
-.delivery-card-icon { font-size: 32px; flex-shrink: 0; line-height: 1; }
-.delivery-card-name { font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; color: var(--teal); margin: 0 0 4px; }
-.delivery-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin: 0 0 12px; }
-.delivery-wa-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); text-decoration: none; font-family: 'Jost', sans-serif; }
-
-/* KAYAK & TOURS */
-.kayak-feature { background: #fff; border-top: 1px solid var(--sand-dark); border-bottom: 1px solid var(--sand-dark); padding: 76px 20px; }
-.kayak-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-.kayak-text .section-label, .kayak-text .section-title { text-align: left; }
-.kayak-text p { font-size: 14px; line-height: 1.9; color: var(--muted); margin-bottom: 26px; }
-.kayak-prices { display: flex; gap: 12px; flex-wrap: wrap; }
-.kayak-price-card { flex: 1; min-width: 110px; border: 1px solid var(--sand-dark); padding: 20px; text-align: center; -webkit-tap-highlight-color: rgba(184, 149, 90, 0.2); }
-.kayak-price-card.featured { background: var(--teal); border-color: var(--teal); }
-.kp-type { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.kayak-price-card.featured .kp-type { color: rgba(255, 255, 255, .4); }
-.kp-price { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 400; color: var(--teal); }
-.kayak-price-card.featured .kp-price { color: var(--gold-light); }
-.kp-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.kayak-price-card.featured .kp-sub { color: rgba(255, 255, 255, .3); }
-.kayak-photo { width: 100%; height: 280px; object-fit: cover; display: block; border-radius: 3px; }
-.kayak-reserve { text-align: center; padding: 12px; background: var(--teal); cursor: pointer; transition: all .25s; margin-top: 16px; border-radius: 3px; }
-.kayak-reserve p { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin: 0; }
-.kayak-reserve:hover { opacity: 0.85; }
-
-/* TOUR CARDS */
-.tour-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1200px; margin: 0 auto; padding: 0 20px 48px; }
-.tour-card { background: #fff; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 12px rgba(26, 74, 74, 0.06); }
-.tour-photo-wrap { height: 240px; background: var(--sand-dark); position: relative; overflow: hidden; }
-.tour-photo { width: 100%; height: 100%; object-fit: cover; }
-.tour-body { padding: 24px; }
-.tour-number { font-size: 11px; letter-spacing: .2em; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
-.tour-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--teal); margin-bottom: 12px; }
-.tour-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
-.tour-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.price-box { border: 1px solid var(--sand-dark); padding: 13px 10px; text-align: center; }
-.price-box-label { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-.price-box-amount { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--teal); }
-.price-box-full { grid-column: span 2; border: 1px solid var(--teal); background: var(--teal); padding: 13px 10px; text-align: center; }
-.price-box-full .price-box-label { color: rgba(255, 255, 255, .4); }
-.price-box-full .price-box-amount { color: var(--gold-light); }
-.price-box-sub { font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
-.price-box.priv .price-box-sub { color: rgba(255, 255, 255, .3); }
-.tour-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 14px; border-top: 1px solid var(--sand-dark); flex-wrap: wrap; }
-.schedule-label { font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-.schedule-times { display: flex; gap: 5px; flex-wrap: wrap; }
-.time-badge { font-size: 14px; background: var(--teal); color: rgba(255, 255, 255, .85); font-size: 11px; padding: 4px 9px; }
-.reserve-btn { background: var(--gold); color: #fff; border: none; cursor: pointer; font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; padding: 10px 16px; font-weight: 400; transition: background .25s; white-space: nowrap; text-decoration: none; display: inline-block; }
-.reserve-btn:hover { background: var(--gold-light); }
-
-/* BOOKING */
-.booking-section { background: var(--teal); padding: 76px 20px; }
-.booking-inner { max-width: 600px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 4px; }
-.booking-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--teal); margin-bottom: 20px; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.form-group { margin-bottom: 16px; }
-.form-group.full { grid-column: span 1; }
-.form-label { display: block; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.form-input, .form-select, .form-textarea { width: 100%; padding: 12px; border: 1px solid var(--sand-dark); border-radius: 3px; font-family: 'Jost', sans-serif; font-size: 14px; color: var(--teal); }
-.form-textarea { resize: vertical; min-height: 100px; }
-.form-submit { width: 100%; background: var(--gold); color: #fff; border: none; padding: 14px; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: background .25s; font-weight: 500; }
-.form-submit:hover { background: var(--gold-light); }
-.form-or { text-align: center; margin: 16px 0; color: var(--muted); font-size: 12px; }
-.form-wa { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #25D366; color: #fff; padding: 14px; border-radius: 3px; text-decoration: none; font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 500; transition: background .25s; }
-.form-wa:hover { background: #1ebc57; }
-.form-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; }
-.form-success { display: none; text-align: center; padding: 40px 20px; }
-.form-success-icon { width: 60px; height: 60px; background: var(--teal); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-.form-success-icon svg { width: 30px; height: 30px; stroke: #fff; }
-.form-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--teal); margin-bottom: 12px; }
-.form-success p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
-
-/* PRACTICAL */
-.practical { background: #fff; padding: 76px 20px; }
-.practical-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.info-block { background: var(--sand); padding: 32px; border-radius: 4px; }
-.info-block-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--teal); margin-bottom: 20px; }
-.info-item { margin-bottom: 16px; }
-.info-item strong { display: block; font-size: 13px; color: var(--teal); margin-bottom: 4px; font-weight: 500; }
-.info-item span { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-/* FOOTER */
-.footer-photo-strip { height: 200px; background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==') center/cover; }
-footer { background: var(--teal); color: var(--white); padding: 48px 20px; text-align: center; }
-.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 32px; margin-bottom: 8px; }
-.footer-tagline { font-size: 14px; opacity: .8; margin-bottom: 24px; }
-.footer-divider { width: 40px; height: 1px; background: var(--gold); margin: 0 auto 24px; }
-.footer-wa { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, .1); padding: 10px 20px; border-radius: 3px; color: #fff; text-decoration: none; font-size: 12px; transition: background .25s; }
-.footer-wa:hover { background: rgba(255, 255, 255, .2); }
-.footer-address { font-size: 12px; opacity: .7; margin-top: 24px; line-height: 1.6; }
-.footer-copy { font-size: 11px; opacity: .5; margin-top: 32px; }
-
-/* MOBILE */
-@media(max-width: 768px) {
-    .hub-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .hub-grid .hub-card:last-child { grid-column: span 2; }
-    .kayak-inner { grid-template-columns: 1fr; }
-    .kayak-photo { display: none; }
-    .kayak-prices { grid-template-columns: 1fr 1fr; }
-    .kp-price { font-size: 26px; }
-    .tour-grid { grid-template-columns: 1fr; }
-    .tour-card { margin-bottom: 24px; }
-    .tour-prices { grid-template-columns: 1fr; }
-    .price-box-full { grid-column: span 1; }
-    .booking-inner { padding: 28px 16px; }
-    .form-grid { grid-template-columns: 1fr; }
-    .practical-inner { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .hero-brand { font-size: 44px !important; }
-}
-@media(max-width: 400px) {
-    .hub-grid { grid-template-columns: 1fr; }
-    .hub-grid .hub-card:last-child { grid-column: span 1; }
-    .route-visual { grid-template-columns: 1fr; }
-    .hero-brand { font-size: 44px !important; }
-    .nav-links { display: none; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menú de Actividades</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #2c5aa0;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+    header p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      color: #2c5aa0;
+      border-bottom: 2px solid #2c5aa0;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+      font-size: 1.4rem;
+    }
+    .actividad {
+      background-color: white;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+    .actividad h3 {
+      margin-bottom: 0.3rem;
+      color: #1a3e6f;
+    }
+    .actividad p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    form {
+      background-color: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin: 0.6rem 0 0.3rem;
+      font-weight: 600;
+      color: #333;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.7rem 1.2rem;
+      background-color: #2c5aa0;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1d4480;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f0f0f0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Menú de Actividades</h1>
+    <p>Programa de actividades mensuales para la comunidad</p>
+  </header>
 
-<!-- NAV -->
-<nav class="navbar">
-    <div class="container nav-inner">
-        <a class="nav-logo" href="#" onclick="showPage('tours');return false">LAGOONA</a>
-        <div class="nav-right">
-            <div class="nav-tabs" id="nav-tab-area">
-                <button class="nav-tab-btn active" id="tab-tours" onclick="showPage('tours')" data-i18n="nav.tours">Tours & Actividades</button>
-                <button class="nav-tab-btn" id="tab-gastro" onclick="showPage('gastro')" data-i18n="nav.gastro">Gastronomía</button>
-                <button class="nav-tab-btn" id="tab-amenidades" onclick="showPage('amenidades')" data-i18n="nav.amenidades">Amenidades</button>
-                <button class="nav-tab-btn" id="tab-servicios" onclick="showPage('servicios')" data-i18n="nav.servicios">Servicios</button>
-                <button class="nav-tab-btn" id="tab-delivery" onclick="showPage('delivery')" data-i18n="nav.delivery">Delivery</button>
-            </div>
-            <div class="nav-links" id="nav-tours-links">
-                <a href="#tours-section" data-i18n="nav.link.tours">Tours</a>
-                <a href="#kayak-section" data-i18n="nav.link.kayak">Kayak</a>
-                <a href="#recorrido-section" data-i18n="nav.link.recorrido">Recorrido</a>
-                <a href="#reservar" class="nav-reserve" data-i18n="nav.link.reservar">Reservar</a>
-            </div>
-            <div class="nav-links" id="nav-gastro-links" style="display:none">
-                <a href="#gastro-breakfast" onclick="showMoment('breakfast')" data-i18n="nav.link.breakfast">Desayunos</a>
-                <a href="#gastro-lunch" onclick="showMoment('lunch')" data-i18n="nav.link.lunch">Comidas</a>
-                <a href="#gastro-dinner" onclick="showMoment('dinner')" data-i18n="nav.link.dinner">Cenas</a>
-                <a href="#gastro-bars" onclick="showMoment('bars')">Bares</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<!-- PAGE: TOURS -->
-<div class="page-view active" id="page-tours">
-    <div class="welcome-strip">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <p class="hero-eyebrow" data-i18n="hero.eyebrow">Aldea Mayab · Bacalar, Quintana Roo</p>
-            <h1 class="hero-brand">LAGOONA</h1>
-            <p class="hero-sub" data-i18n="hero.sub">Guía de huéspedes · Aldea Mayab</p>
-        </div>
-    </div>
-
-    <!-- TOURS GRID -->
-    <div id="tours-section" class="tour-grid">
-        <!-- 01 PADDLE -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Paddle Board"></div>
-            <div class="tour-body">
-                <p class="tour-number">01</p>
-                <h3 class="tour-name" data-i18n="tour1.name">Paddle Board</h3>
-                <p class="tour-desc" data-i18n="tour1.desc">Deslízate sobre la laguna en una experiencia tranquila y conectada con la naturaleza. Ideal para amaneceres.</p>
-                <div class="tour-prices">
-                    <div class="price-box"><p class="price-box-label" data-i18n="price.shared">Compartido</p><p class="price-box-amount">$550</p><p class="price-box-sub" data-i18n="price.per_person">MXN por persona</p></div>
-                    <div class="price-box priv"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$3,000</p><p class="price-box-sub" data-i18n="pax1">1–4 pax · +$400/extra</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">8:00</span><span class="time-badge">11:00</span><span class="time-badge">15:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Paddle Board')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-        <!-- 02 VELERO -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Velero"></div>
-            <div class="tour-body">
-                <p class="tour-number">02</p>
-                <h3 class="tour-name" data-i18n="tour2.name">Velero Privado</h3>
-                <p class="tour-desc" data-i18n="tour2.desc">Navega con el viento a favor en un velero privado. Incluye bebidas, fruta y parada en el Cenote Esmeralda.</p>
-                <div class="tour-prices">
-                    <div class="price-box"><p class="price-box-label" data-i18n="price.shared">Compartido</p><p class="price-box-amount">$800</p><p class="price-box-sub" data-i18n="price.per_person">MXN por persona</p></div>
-                    <div class="price-box priv"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$4,375</p><p class="price-box-sub" data-i18n="pax2">1–5 pax · +$625/extra</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">9:00</span><span class="time-badge">13:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Tour Velero')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-        <!-- 03 LANCHA -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Lancha"></div>
-            <div class="tour-body">
-                <p class="tour-number">03</p>
-                <h3 class="tour-name" data-i18n="tour3.name">Lancha Privada</h3>
-                <p class="tour-desc" data-i18n="tour3.desc">Recorrido completo por los 7 colores. Incluye parada en el Cenote Negro, Cenote Cocalitos y La Playita.</p>
-                <div class="tour-prices">
-                    <div class="price-box-full"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$4,500</p><p class="price-box-sub" data-i18n="pax3">1–6 pax · +$300/extra</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">9:00</span><span class="time-badge">11:00</span><span class="time-badge">13:00</span><span class="time-badge">15:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Tour Lancha')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-        <!-- 04 PONTÓN -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Pontón"></div>
-            <div class="tour-body">
-                <p class="tour-number">04</p>
-                <h3 class="tour-name" data-i18n="tour4.name">Pontón Privado</h3>
-                <p class="tour-desc" data-i18n="tour4.desc">Espacio amplio y estable. Ideal para grupos pequeños que buscan comodidad y estabilidad en la laguna.</p>
-                <div class="tour-prices">
-                    <div class="price-box-full"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$5,500</p><p class="price-box-sub" data-i18n="pax4">1–6 pax · +$375/extra</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">9:00</span><span class="time-badge">11:00</span><span class="time-badge">13:00</span><span class="time-badge">15:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Tour Pontón')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-        <!-- 05 CATAMARÁN -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Catamarán"></div>
-            <div class="tour-body">
-                <p class="tour-number">05</p>
-                <h3 class="tour-name" data-i18n="tour5.name">Catamarán Recreativo</h3>
-                <p class="tour-desc" data-i18n="tour5.desc">Estabilidad y espacio. Ideal para grupos pequeños que buscan comodidad y estabilidad en la laguna.</p>
-                <div class="tour-prices">
-                    <div class="price-box-full"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$6,000</p><p class="price-box-sub" data-i18n="pax5">1–5 personas</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">9:00</span><span class="time-badge">11:00</span><span class="time-badge">13:00</span><span class="time-badge">15:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Catamarán Recreativo')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-        <!-- 06 CATAMARÁN PREMIUM -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Catamarán Premium"></div>
-            <div class="tour-body">
-                <p class="tour-number">06</p>
-                <h3 class="tour-name" data-i18n="tour6.name">Catamarán Premium</h3>
-                <p class="tour-desc" data-i18n="tour6.desc">Experiencia premium con barra libre, música y parada en el Cenote Esmeralda. Máximo confort.</p>
-                <div class="tour-prices">
-                    <div class="price-box-full"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$15,000</p><p class="price-box-sub" data-i18n="pax6">1–10 pax · +$650/extra</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">9:00</span><span class="time-badge">11:00</span><span class="time-badge">13:00</span><span class="time-badge">15:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Tour Catamarán Premium')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-        <!-- 07 LAGUNA GRILL -->
-        <div class="tour-card reveal">
-            <div class="tour-photo-wrap"><img class="tour-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Laguna Grill"></div>
-            <div class="tour-body">
-                <p class="tour-number">07</p>
-                <h3 class="tour-name" data-i18n="tour7.name">Laguna Grill</h3>
-                <p class="tour-desc" data-i18n="tour7.desc">Experiencia privada — La embarcación más icónica de Bacalar</p>
-                <div class="tour-prices">
-                    <div class="price-box-full"><p class="price-box-label" data-i18n="price.private">Privado</p><p class="price-box-amount">$25,000</p><p class="price-box-sub" data-i18n="pax7">1–4 personas · persona extra $1,200 MXN</p></div>
-                </div>
-                <div class="tour-footer">
-                    <div><p class="schedule-label" data-i18n="time.label">Horario</p><div class="schedule-times"><span class="time-badge">9:00</span><span class="time-badge">11:00</span><span class="time-badge">13:00</span><span class="time-badge">15:00</span></div></div>
-                    <button class="reserve-btn" onclick="selectTour('Laguna Grill')" data-i18n="btn.reserve">Reservar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- KAYAK & ACTIVIDADES NÁUTICAS -->
-    <section id="kayak-section" class="kayak-feature">
-        <div class="kayak-inner">
-            <!-- COLUMNA 1: KAYAK -->
-            <div class="kayak-text reveal">
-                <p class="section-label" data-i18n="kayak.label">Exploración Libre</p>
-                <h2 class="section-title">Kayak<br><em data-i18n="kayak.em">a tu ritmo</em></h2>
-                <p data-i18n="kayak.desc">La forma más silenciosa y sustentable de conocer la laguna. Llega a rincones donde los botes no pueden entrar. Disponible todo el día desde el Casa China.</p>
-                <img class="kayak-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Kayak">
-                <div class="kayak-prices">
-                    <div class="kayak-price-card" role="button" tabindex="0" onclick="selectTour('Kayak Individual', '')" style="cursor:pointer;transition:all .25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(26,74,74,0.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                        <p class="kp-type" data-i18n="kayak.individual">Individual</p>
-                        <p class="kp-price">$350</p>
-                        <p class="kp-sub" data-i18n="kayak.sub">Día completo · MXN</p>
-                        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:10px;margin-bottom:0" data-i18n="kayak.reserve">Reservar →</p>
-                    </div>
-                    <div class="kayak-price-card featured" role="button" tabindex="0" onclick="selectTour('Kayak Doble', '')" style="cursor:pointer;transition:all .25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(26,74,74,0.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                        <p class="kp-type" data-i18n="kayak.doble">Doble</p>
-                        <p class="kp-price">$500</p>
-                        <p class="kp-sub" data-i18n="kayak.sub">Día completo · MXN</p>
-                        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:10px;margin-bottom:0" data-i18n="kayak.reserve">Reservar →</p>
-                    </div>
-                </div>
-            </div>
-            <!-- COLUMNA 2: SNORKEL -->
-            <div class="kayak-text reveal">
-                <p class="section-label" data-i18n="kayak.label">Actividad Acuática</p>
-                <h2 class="section-title">Snorkel<br><em data-i18n="kayak.em">en el Cenote</em></h2>
-                <p data-i18n="kayak.desc">Equipo completo para explorar los cenotes. Incluye chaleco, snorkel y guía. Descubre los estromatolitos y peces tropicales.</p>
-                <img class="kayak-photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Snorkel">
-                <div class="kayak-prices">
-                    <div class="kayak-price-card featured" role="button" tabindex="0" onclick="selectTour('Snorkel', '')" style="cursor:pointer;transition:all .25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(26,74,74,0.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                        <p class="kp-type" data-i18n="kayak.snorkel">Snorkel</p>
-                        <p class="kp-price">$250</p>
-                        <p class="kp-sub" data-i18n="price.per_person">MXN por persona</p>
-                        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:10px;margin-bottom:0" data-i18n="kayak.reserve">Reservar →</p>
-                    </div>
-                </div>
-            </div>
-            <!-- COLUMNA 3: LOS RÁPIDOS -->
-            <div class="kayak-text reveal">
-                <p class="section-label" data-i18n="rapidos.label">Experiencia Plus · Malekair</p>
-                <h2 class="section-title">Tour a<br><em data-i18n="rapidos.em">Los Rápidos</em></h2>
-                <p data-i18n="rapidos.desc">5 horas navegando los puntos más icónicos de la laguna. Nevera con hielo, aguas, fruta, barra libre, ceviche o aguachile, chaleco salvavidas y capitán certificado con seguro de pasajero.</p>
-                <div class="route-visual" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-                    <div style="background:#f5f2ed;border-radius:3px;overflow:hidden;position:relative"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Canal de los Piratas" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><div style="position:absolute;bottom:8px;left:8px"><p class="stop-number" style="font-size:10px;color:var(--gold);margin:0">V</p><p class="stop-name" style="font-size:9px;color:var(--teal);margin:0" data-i18n="stop5.name">Canal de los Piratas</p></div></div>
-                    <div style="background:#f5f2ed;border-radius:3px;overflow:hidden;position:relative"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Cenote Cocalitos" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease"><div style="position:absolute;bottom:8px;left:8px"><p class="stop-number" style="font-size:10px;color:var(--gold);margin:0">II</p><p class="stop-name" style="font-size:9px;color:var(--teal);margin:0" data-i18n="stop2.name">Cenote Cocalitos</p></div></div>
-                </div>
-                <div class="kayak-prices">
-                    <div class="kayak-price-card" role="button" tabindex="0" onclick="selectTour('Tour Los Rápidos', 'Colectivo Plus'); document.getElementById('reservar').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;transition:all .25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(26,74,74,0.18)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                        <p class="kp-type" data-i18n="rapidos.shared">Colectivo Plus</p>
-                        <p class="kp-price">$1,200</p>
-                        <p class="kp-sub" data-i18n="price.per_person">MXN por persona</p>
-                        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:10px;margin-bottom:0" data-i18n="kayak.reserve">Reservar →</p>
-                    </div>
-                    <div class="kayak-price-card featured" role="button" tabindex="0" onclick="selectTour('Tour Los Rápidos', 'Privado'); document.getElementById('reservar').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;transition:all .25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(26,74,74,0.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                        <p class="kp-type" data-i18n="rapidos.private">Privado</p>
-                        <p class="kp-price">$8,500</p>
-                        <p class="kp-sub" data-i18n="rapidos.pax">1–6 pax · +$1,000/extra</p>
-                        <p style="font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:10px;margin-bottom:0" data-i18n="kayak.reserve">Reservar →</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <main>
+    <section id="actividades">
+      <h2>Actividades disponibles</h2>
+      <div class="actividad">
+        <h3>Workshop de desarrollo empresarial</h3>
+        <p>Capacitación práctica para emprendedores y pequeñas empresas: modelos de negocio, financiamiento y mercados.</p>
+      </div>
+      <div class="actividad">
+        <h3>Taller de páginas web y herramientas digitales</h3>
+        <p>Introducción a HTML, CSS, contenidos digitales y cómo usar la web para tu negocio.</p>
+      </div>
+      <div class="actividad">
+        <h3>Manual de procedimientos laboral</h3>
+        <p>Sesión informativa sobre cómo documentar procesos internos y crear manuales de operaciones.</p>
+      </div>
     </section>
 
-    <!-- BOOKING -->
-    <section id="reservar" class="booking-section">
-        <div class="booking-inner">
-            <div class="section-intro reveal">
-                <p class="section-label" data-i18n="booking.label">Proceso de Reserva</p>
-                <h2 class="section-title" style="color:var(--teal)"><span data-i18n="booking.title.prefix">Reserva tu</span> <em data-i18n="booking.em">experiencia</em></h2>
-                <p class="section-desc" data-i18n="booking.intro">Completa el formulario y nuestro equipo confirmará tu reserva en menos de 24 horas. Los tours más solicitados tienen disponibilidad limitada.</p>
-            </div>
-            <div id="booking-form-wrap">
-                <div class="form-grid">
-                    <div class="form-group"><label class="form-label" for="f-nombre" data-i18n="form.nombre">Nombre completo</label><input class="form-input" type="text" id="f-nombre" placeholder="Tu nombre"></div>
-                    <div class="form-group"><label class="form-label" for="f-unidad" data-i18n="form.edificio">Edificio y departamento</label><input class="form-input" type="text" id="f-unidad" placeholder="Ej. Torre A · Depto 204"></div>
-                    <div class="form-group"><label class="form-label" for="f-whatsapp" data-i18n="form.wa">WhatsApp</label><input class="form-input" type="text" id="f-whatsapp" placeholder="Tu número"></div>
-                    <div class="form-group"><label class="form-label" for="f-tour" data-i18n="form.select_tour">Tour seleccionado</label><input class="form-input" type="text" id="f-tour" readonly placeholder="Selecciona un tour arriba"></div>
-                    <div class="form-group" id="modalidad-row" style="display:none"><label class="form-label" data-i18n="form.mod">Modalidad</label><input class="form-input" type="text" id="f-modalidad" readonly></div>
-                    <div class="form-group"><label class="form-label" for="f-fecha" data-i18n="form.fecha">Fecha preferida</label><input class="form-input" type="date" id="f-fecha"></div>
-                    <div class="form-group"><label class="form-label" for="f-personas" data-i18n="form.personas">Número de personas</label><input class="form-input" type="number" id="f-personas" placeholder="Ej. 2"></div>
-                    <div class="form-group full"><label class="form-label" for="f-notas" data-i18n="form.notas">Comentarios o peticiones especiales</label><textarea class="form-textarea" id="f-notas" placeholder="Alergias, celebración especial, necesidades particulares..."></textarea></div>
-                </div>
-                <!-- Botón Principal WhatsApp -->
-                <button class="form-submit" id="submit-btn" data-i18n="form.submit" onclick="openWhatsApp()">Consultar disponibilidad por WhatsApp</button>
-                <p class="form-note" style="margin-top:12px" data-i18n-html="form.note">Confirmación en menos de <strong>24 horas</strong> · Reembolso total con +24 hrs de anticipación</p>
-            </div>
-            <div class="form-success" id="form-success">
-                <div class="form-success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M5 13l4 4L19 7"/></svg></div>
-                <h3 data-i18n="form.success_title">¡Solicitud enviada!</h3>
-                <p data-i18n="form.success_msg">Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu tour desde el Casa China.</p>
-                <a class="form-wa" href="https://wa.me/529842411410" target="_blank" style="margin-top:20px;max-width:280px;margin-left:auto;margin-right:auto">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a>
-            </div>
-        </div>
+    <section id="reservar">
+      <h2>Reserva tu participación</h2>
+      <form action="#" method="post">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" required />
+
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" name="telefono" />
+
+        <label for="actividad">Actividad a reservar</label>
+        <select id="actividad" name="actividad" required>
+          <option value="">Selecciona una actividad</option>
+          <option value="desarrollo-empresarial">Workshop de desarrollo empresarial</option>
+          <option value="páginas-web">Taller de páginas web y herramientas digitales</option>
+          <option value="manual-procedimientos">Manual de procedimientos laboral</option>
+        </select>
+
+        <label for="fecha">Fecha de la actividad</label>
+        <input type="date" id="fecha" name="fecha" required />
+
+        <button type="submit">Enviar reserva</button>
+      </form>
     </section>
+  </main>
 
-    <!-- PRACTICAL -->
-    <section class="practical">
-        <div class="section-intro reveal" style="max-width:900px;margin:0 auto 48px">
-            <p class="section-label" data-i18n="practical.label">Información Práctica</p>
-            <h2 class="section-title" style="color:var(--teal)"><span data-i18n="practical.title.prefix">Antes de</span> <em data-i18n="practical.em">zarpar</em></h2>
-        </div>
-        <div class="practical-inner">
-            <div class="info-block reveal">
-                <p class="info-block-title" data-i18n="prac.what">¿Qué llevar?</p>
-                <div class="info-item"><strong data-i18n="prac.swimsuit">Traje de baño</strong><span data-i18n="prac.swimsuit_note">Puesto desde que salgas de tu depto</span></div>
-                <div class="info-item"><strong data-i18n="prac.hat">Sombrero o gorra</strong><span data-i18n="prac.hat_note">Protección solar esencial</span></div>
-                <div class="info-item"><strong data-i18n="prac.towel">Toalla</strong><span data-i18n="prac.towel_note">Para secarte entre paradas</span></div>
-                <div class="info-item"><strong data-i18n="prac.uv">Ropa UV</strong><span data-i18n="prac.uv_note">Recomendada para tours largos</span></div>
-                <div class="info-item"><strong data-i18n="prac.cash">Efectivo extra</strong><span data-i18n="prac.cash_note">Para propinas y recuerdos</span></div>
-            </div>
-            <div class="info-block reveal">
-                <p class="info-block-title" data-i18n="prac.notes_title">Notas Importantes</p>
-                <div class="info-item"><strong data-i18n="prac.departure">Punto de salida</strong><span data-i18n="prac.departure_val">Casa China — sin traslados</span></div>
-                <div class="info-item"><strong data-i18n="prac.access">Accesibilidad</strong><span data-i18n="prac.access_val">No hay acceso para silla de ruedas ni carriola</span></div>
-                <div class="info-item"><strong data-i18n="prac.babies">Bebés</strong><span data-i18n="prac.babies_val">No contamos con asientos para bebés</span></div>
-                <div class="info-item"><strong data-i18n="prac.health">Salud</strong><span data-i18n="prac.health_val">No recomendable con condiciones cardíacas</span></div>
-                <div class="info-item"><strong data-i18n="prac.season">Temporada</strong><span data-i18n="prac.season_val">Horarios sujetos a cambio</span></div>
-                <div class="info-item"><strong data-i18n="prac.payments">Pagos & Cancelación</strong><span data-i18n="prac.cards_val">Visa · Mastercard · Amex</span></div>
-                <div class="info-item"><strong data-i18n="prac.refund">Reembolso total</strong><span data-i18n="prac.refund_val">Cancelaciones con +24 hrs de anticipación</span></div>
-                <div class="info-item"><strong data-i18n="prac.norefund">Sin reembolso</strong><span data-i18n="prac.norefund_val">Cancelaciones con menos de 24 hrs</span></div>
-                <div class="info-item"><strong data-i18n="prac.packages">Paquetes privados</strong><span data-i18n="prac.packages_val">Pregunta por alimentos y bebidas adicionales</span></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PAGE: GASTRO -->
-    <div class="page-view" id="page-gastro">
-        <div class="welcome-strip">
-            <div class="hero-bg"></div>
-            <div class="hero-content">
-                <p class="hero-eyebrow" data-i18n="hero.eyebrow">Aldea Mayab · Bacalar, Quintana Roo</p>
-                <h1 class="hero-brand">LAGOONA</h1>
-                <p class="hero-sub" data-i18n="gastro.headline">Bacalar en el Paladar</p>
-            </div>
-        </div>
-        <div class="container" style="padding:48px 20px">
-            <div class="section-intro reveal">
-                <p class="section-label" data-i18n="gastro.label">Gastronomía</p>
-                <h2 class="section-title" style="color:var(--teal)"><span data-i18n="gastro.title.prefix">Sabores de</span> <em data-i18n="gastro.em">Bacalar</em></h2>
-                <p class="section-desc" data-i18n="gastro.intro">Una guía gastronómica curada por Lagoona para que vivas Bacalar a través de sus sabores. Ordenados por momentos del día.</p>
-            </div>
-            <div class="gastro-moment-pills" style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:32px">
-                <button class="moment-pill active" onclick="showMoment('breakfast')" data-i18n="gastro.breakfast_em">Desayunos & Brunch</button>
-                <button class="moment-pill" onclick="showMoment('lunch')" data-i18n="gastro.lunch_em">Comidas & Lunch</button>
-                <button class="moment-pill" onclick="showMoment('dinner')" data-i18n="gastro.bars_em">Bares & Ambiente</button>
-            </div>
-            <div id="gastro-breakfast" class="resto-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-                <!-- 01 ENAMORA -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Enamora" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname1">Enamora Bacalar</h4>
-                        <p class="resto-desc" data-i18n="resto1.desc">Un café-restaurante muy querido en el centro, famoso por su pan artesanal, café orgánico y desayunos abundantes. Ambiente tranquilo con música suave.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="resto-price" style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;color:var(--teal)">$200 – $400 MXN / persona</span></div>
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/enamorabacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@enamorabacalar</a><a href="https://maps.google.com/?q=Enamora+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 02 BAMOA -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="BAMOA" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname2">BAMOA Cafe</h4>
-                        <p class="resto-desc" data-i18n="resto2.desc">Moderno y relajado, combina café, panadería y cocina inspirada en ingredientes del Caribe Mexicano. Perfecto para un brunch sin apuros.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span class="resto-price" style="font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;color:var(--teal)">$250 – $350 MXN / persona</span></div>
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/bamoabacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@bamoabacalar</a><a href="https://maps.google.com/?q=BAMOA+Cafe+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 03 MADRE MASA -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Madre Masa" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname3">Madre Masa</h4>
-                        <p class="resto-desc" data-i18n="resto3.desc">Panadería artesanal muy popular, conocida por su repostería estilo francés y desayunos frescos. Cola frecuente — vale la pena esperar.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/madre_masa_bacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@madre_masa_bacalar</a><a href="https://maps.google.com/?q=Madre+Masa+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="gastro-lunch" class="resto-grid" style="display:none;grid-template-columns:repeat(3,1fr);gap:24px">
-                <!-- 04 VICARO -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Vícaro" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname4">Vícaro</h4>
-                        <p class="resto-desc" data-i18n="resto4.desc">Restaurante contemporáneo dentro del hotel AMAINAH, con vista espectacular a la laguna y una cocina que destaca por sus ingredientes frescos y presentaciones cuidadas.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/vicaro.mx" target="_blank" style="color:var(--teal-light);text-decoration:none">@vicaro.mx</a><a href="https://maps.google.com/?q=Vicaro+Bacalar+AMAINAH" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 05 LA PLAYITA -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="La Playita" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname5">La Playita</h4>
-                        <p class="resto-desc" data-i18n="resto5.desc">Restaurante frente al agua con vista directa a la laguna. Especialidad en mariscos frescos y coctelería. Ambiente relajado y familiar.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/laplayitabacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@laplayitabacalar</a><a href="https://maps.google.com/?q=La+Playita+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 06 YERBABUENA -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Yerbabuena" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname6">Yerbabuena</h4>
-                        <p class="resto-desc" data-i18n="resto6.desc">Cocina de autor con ingredientes locales. Menú cambiante con opciones vegetarianas y mariscos. Ambiente íntimo y elegante.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/yerbabuenabacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@yerbabuenabacalar</a><a href="https://maps.google.com/?q=Yerbabuena+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="gastro-dinner" class="resto-grid" style="display:none;grid-template-columns:repeat(3,1fr);gap:24px">
-                <!-- 07 CHEUINIC -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Cheuinic" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname7">Cheuinic</h4>
-                        <p class="resto-desc" data-i18n="resto7.desc">Cocina contemporánea con toques mexicanos. Ambiente moderno y acogedor. Ideal para una cena especial.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/cheuinic_bacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@cheuinic_bacalar</a><a href="https://maps.google.com/?q=Cheuinic_bacalar+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 08 NIXTAMAL -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Nixtamal" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname8">Nixtamal</h4>
-                        <p class="resto-desc" data-i18n="resto8.desc">Cocina mexicana tradicional con un toque moderno. Especialidad en tacos y antojitos mexicanos. Ambiente casual.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/nixtamal.bacalar" target="_blank" style="color:var(--teal-light);text-decoration:none">@nixtamal.bacalar</a><a href="https://maps.google.com/?q=Nixtamal.bacalar+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 09 TRATTORIA -->
-                <div class="resto-card reveal">
-                    <div class="resto-photo" style="height:220px;background:#f5f2ed;position:relative;overflow:hidden"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==" alt="Trattoria" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div class="resto-body" style="padding:24px">
-                        <h4 class="resto-name" data-i18n="rname9">Trattoria del 46</h4>
-                        <p class="resto-desc" data-i18n="resto9.desc">Cocina italiana auténtica en el corazón de Bacalar. Pastas frescas, pizzas y vinos. Ambiente romántico y acogedor.</p>
-                        <div class="resto-meta" style="display:flex;flex-direction:column;gap:7px;padding-top:16px;border-top:1px solid var(--sand-dark)">
-                            <div class="resto-meta-row" style="display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;opacity:.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><a href="https://instagram.com/latrattoriadel46" target="_blank" style="color:var(--teal-light);text-decoration:none">@latrattoriadel46</a><a href="https://maps.google.com/?q=La+Trattoria+del+46+Bacalar+Bacalar" target="_blank" class="resto-map-link" style="margin-left:0;margin-top:6px"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg> Maps</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="service-coming-soon reveal" style="background:rgba(184,149,90,0.08);border:1px solid rgba(184,149,90,0.25);border-radius:4px;padding:24px 28px;display:flex;align-items:center;gap:16px;margin-top:32px">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <p style="margin:0;font-size:14px;color:var(--muted)" data-i18n="coming.soon.amenidades">Próximamente más opciones de equipamiento. ¿Necesitas algo que no ves aquí? <a href="https://wa.me/529842411410?text=Hola%2C+necesito+un+equipamiento+que+no+veo+en+la+guía" target="_blank" style="color:var(--gold)">Escríbenos al WhatsApp.</a></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- PAGE: AMENIDADES -->
-    <div class="page-view" id="page-amenidades">
-        <div class="service-page">
-            <div class="service-page-header reveal">
-                <p class="section-label" data-i18n="amenidades.label">Equipamiento & Renta</p>
-                <h2 class="section-title"><em data-i18n="amenidades.title.em">Todo</em> <span data-i18n="amenidades.title.rest">lo que necesitas</span></h2>
-                <p class="section-desc" data-i18n="amenidades.desc">Equipamiento disponible para que disfrutes la laguna y tu departamento al máximo. Solicita lo que necesitas y te lo llevamos.</p>
-            </div>
-            <div class="service-grid">
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><img src="Img/sillas.jpg" alt="Silla"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">🪑</div><p class="service-card-name" data-i18n="amen.chair">Silla de laguna</p><p class="service-card-desc" data-i18n="amen.chair.desc">Silla reclinable para disfrutar de la laguna en comodidad. Perfecta para días soleados.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+rentar+una+silla+de+laguna" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><img src="Img/cuna.jpg" alt="Cuna"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">🛏️</div><p class="service-card-name" data-i18n="amen.crib">Cuna de viaje</p><p class="service-card-desc" data-i18n="amen.crib.desc">Cuna portátil plegable para bebés. Segura, cómoda y fácil de instalar en tu habitación.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+rentar+una+cuna+de+viaje" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/sombrilla.jpg" alt="Sombrilla"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">☂️</div><p class="service-card-name" data-i18n="amen.umbrella">Sombrilla & Tapete</p><p class="service-card-desc" data-i18n="amen.umbrella.desc">Sombrilla y tapete de playa para protegerte del sol mientras disfrutas de la laguna.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+rentar+una+sombrilla+y+tapete" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/snorkel.jpg" alt="Snorkel"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">🤿</div><p class="service-card-name" data-i18n="amen.snorkel">Equipo de Snorkel</p><p class="service-card-desc" data-i18n="amen.snorkel.desc">Máscara, snorkel y aletas para explorar los cenotes. Equipo limpio y revisado.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+rentar+equipo+de+snorkel" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/bebe.jpg" alt="Baby Kit"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">👶</div><p class="service-card-name" data-i18n="amen.baby">Baby Kit</p><p class="service-card-desc" data-i18n="amen.baby.desc">Tina portátil, monitor de bebé, protección básica y accesorios para mantener a tu bebé seguro y cómodo.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+rentar+un+baby+kit" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-            </div>
-            <div class="service-coming-soon reveal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="margin:0;font-size:14px;color:var(--muted)" data-i18n="coming.soon.amenidades">Próximamente más opciones de equipamiento. ¿Necesitas algo que no ves aquí? <a href="https://wa.me/529842411410?text=Hola%2C+necesito+un+equipamiento+que+no+veo+en+la+guía" target="_blank" style="color:var(--gold)">Escríbenos al WhatsApp.</a></p></div>
-        </div>
-    </div>
-
-    <!-- PAGE: SERVICIOS -->
-    <div class="page-view" id="page-servicios">
-        <div class="service-page">
-            <div class="service-page-header reveal">
-                <p class="section-label" data-i18n="servicios.label">Servicios a la Estancia</p>
-                <h2 class="section-title"><em data-i18n="servicios.title.em">Experiencias</em> <span data-i18n="servicios.title.rest">a tu medida</span></h2>
-                <p class="section-desc" data-i18n="servicios.desc">Servicios coordinados por Lagoona con proveedores seleccionados para hacer tu estancia verdaderamente especial. Solicita con anticipación para garantizar disponibilidad.</p>
-            </div>
-            <div class="service-grid">
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/></svg><img src="Img/masaje.jpg" alt="Masaje"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">💆</div><p class="service-card-name" data-i18n="serv.massage">Masaje en habitación</p><p class="service-card-desc" data-i18n="serv.massage.desc">Masaje relajante o terapéutico en la comodidad de tu departamento. Terapeuta certificada con mesa profesional.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+agendar+un+masaje" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/chef.jpg" alt="Chef"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">👨‍🍳</div><p class="service-card-name" data-i18n="serv.chef">Chef privado</p><p class="service-card-desc" data-i18n="serv.chef.desc">Chef profesional en tu departamento para desayuno, comida o cena. Menú personalizado con ingredientes frescos locales.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+un+chef+privado" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/deco.jpg" alt="Decoración"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">🎉</div><p class="service-card-name" data-i18n="serv.deco">Decoración especial</p><p class="service-card-desc" data-i18n="serv.deco.desc">Decoración de habitación para cumpleaños, aniversarios, lunas de miel o cualquier celebración especial. Flores, globos y más.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+una+decoración+especial" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/foto.jpg" alt="Foto"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">📸</div><p class="service-card-name" data-i18n="serv.photo">Sesión de fotos</p><p class="service-card-desc" data-i18n="serv.photo.desc">Fotógrafo profesional para sesiones en la laguna, en el departamento o alrededor de Bacalar. Recuerdos que duran para siempre.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+una+sesión+de+fotos" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/transporte.jpg" alt="Transporte"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">🚐</div><p class="service-card-name" data-i18n="serv.transfer">Transfer & Transporte</p><p class="service-card-desc" data-i18n="serv.transfer.desc">Traslados desde los aeropuertos de Chetumal o Cancún, y transporte local en Bacalar. Puntual y confiable.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+un+transfer+o+transporte" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-                <div class="service-card reveal">
-                    <div class="service-card-photo"><div class="service-card-photo-placeholder"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12h20M12 2v20"/><path d="M12 2a10 10 0 0110 10 10 10 0 01-10 10 10 10 0 01-10-10 10 10 0 0110-10z"/></svg><img src="Img/super.jpg" alt="Super"><span data-i18n="hub.photo_coming">Foto próximamente</span></div></div>
-                    <div class="service-card-body"><div class="service-card-icon">🛒</div><p class="service-card-name" data-i18n="serv.grocery">Despensa pre-llegada</p><p class="service-card-desc" data-i18n="serv.grocery.desc">Llegamos con tu nevera lista. Envíanos tu lista de compras y la tenemos preparada antes de que llegues al departamento.</p><span class="service-avail" data-i18n="amen.avail">Disponible · Consultar disponibilidad</span><br><br><a href="https://wa.me/529842411410?text=Hola%2C+me+interesa+el+servicio+de+despensa+pre-llegada" target="_blank" class="service-wa-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a></div>
-                </div>
-            </div>
-            <div class="service-coming-soon reveal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="margin:0;font-size:14px;color:var(--muted)" data-i18n="coming.soon.servicios">Próximamente más servicios. ¿Tienes alguna solicitud especial? <a href="https://wa.me/529842411410?text=Hola%2C+tengo+una+solicitud+especial+de+servicio" target="_blank" style="color:var(--gold)">Escríbenos al WhatsApp.</a></p></div>
-        </div>
-    </div>
-
-    <!-- PAGE: DELIVERY -->
-    <div class="page-view" id="page-delivery">
-        <div class="service-page">
-            <div class="service-page-header reveal">
-                <p class="section-label" data-i18n="delivery.label">A domicilio en Bacalar</p>
-                <h2 class="section-title"><em data-i18n="delivery.title.em">Delivery</em> <span data-i18n="delivery.title.rest">sin salir del depto</span></h2>
-                <p class="section-desc" data-i18n="delivery.desc">Lo que necesitas, en la puerta de tu departamento. Servicios de entrega disponibles en Bacalar.</p>
-            </div>
-            <div class="delivery-grid">
-                <div class="delivery-card reveal">
-                    <div class="delivery-card-icon">🛵</div>
-                    <div>
-                        <p class="delivery-card-name" data-i18n="del.lagoona.name">Delivery Lagoona</p>
-                        <p class="delivery-card-desc" data-i18n="del.lagoona.desc">¿Quieres algo específico de algún restaurante o tienda de Bacalar? Escríbenos y lo gestionamos por ti. Sin complicaciones.</p>
-                        <a href="https://wa.me/529831353104?text=Hola%2C+quisiera+hacer+un+pedido+de+delivery" target="_blank" class="delivery-wa-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="del.wa_btn">Pedir por WhatsApp · 983 135 3104</span></a>
-                    </div>
-                </div>
-                <div class="delivery-card reveal">
-                    <div class="delivery-card-icon">🛒</div>
-                    <div>
-                        <p class="delivery-card-name" data-i18n="del.super.name">Super & Provisiones</p>
-                        <p class="delivery-card-desc" data-i18n="del.super.desc">Supermercado Chedraui y tiendas locales entregan en Bacalar. También puedes enviarnos tu lista y la tenemos lista antes de que llegues.</p>
-                        <a href="https://wa.me/529831353104?text=Hola%2C+quisiera+hacer+un+pedido+de+supermercado" target="_blank" class="delivery-wa-link"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="del.wa_btn">Pedir por WhatsApp · 983 135 3104</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="service-coming-soon reveal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p style="margin:0;font-size:14px;color:var(--muted)" data-i18n="coming.soon.delivery">Estamos sumando más opciones de delivery locales. <a href="https://wa.me/529842411410?text=Hola%2C+quiero+sugerir+un+servicio+de+delivery" target="_blank" style="color:var(--gold)">¿Tienes alguna sugerencia?</a></p></div>
-        </div>
-    </div>
-
-    <!-- FOOTER PHOTO -->
-    <div class="footer-photo-strip"></div>
-    <footer>
-        <p class="footer-logo">LAGOONA</p>
-        <p class="footer-tagline" data-i18n="footer.sub">Curated Vacation Homes · Aldea Mayab</p>
-        <div class="footer-divider"></div>
-        <a class="footer-wa" href="https://wa.me/529842411410" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.529 5.849L.057 23.5l5.797-1.524A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.898 0-3.67-.524-5.183-1.433l-.371-.22-3.844 1.009 1.026-3.742-.242-.384A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg><span data-i18n="amen.wa_btn">Solicitar por WhatsApp</span></a>
-        <p class="footer-address">Carretera Chetumal–Cancún Km 10.6<br>Residencial Aldea Mayab, Xul-Ha<br data-i18n="footer.location">Bacalar, Quintana Roo, México</p>
-        <p class="footer-copy" data-i18n="footer.copy">© Lagoona Curated Vacation Homes · Todos los derechos reservados</p>
-    </footer>
-
-<script>
-// ── PAGE SWITCHING ──
-function showPage(page, skipScroll) {
-    document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + page).classList.add('active');
-    // Nav tabs
-    ['tours','gastro','amenidades','servicios','delivery'].forEach(p => {
-        const tab = document.getElementById('tab-' + p);
-        if (tab) tab.classList.toggle('active', p === page);
-    });
-    // Nav links
-    document.getElementById('nav-tours-links').style.display = page === 'tours' ? 'flex' : 'none';
-    document.getElementById('nav-gastro-links').style.display = page === 'gastro' ? 'flex' : 'none';
-    if (!skipScroll) window.scrollTo(0,0);
-    setTimeout(triggerReveal,100);
-}
-// ── GASTRO MOMENT TABS ──
-function showMoment(moment) {
-    const sections = ['breakfast','lunch','dinner','bars'];
-    sections.forEach(s => {
-        document.getElementById('gastro-' + s).classList.toggle('active', s === moment);
-    });
-    document.querySelectorAll('.moment-pill').forEach((p, i) => {
-        p.classList.toggle('active', i === sections.indexOf(moment));
-    });
-    setTimeout(triggerReveal, 100);
-}
-// ── AUTO-SELECT TOUR + SCROLL TO FORM ──
-function selectTour(tour, modalityName) {
-    document.getElementById('f-tour').value = tour;
-    const modRow = document.getElementById('modalidad-row');
-    if(modalityName) {
-        modRow.style.display = 'block';
-        document.getElementById('f-modalidad').value = modalityName;
-    } else {
-        modRow.style.display = 'none';
-    }
-    // Scroll to form
-    document.getElementById('reservar').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-// ── WHATSAPP DIRECT (PRIORITIZED) ──
-function openWhatsApp() {
-    var nombre = document.getElementById('f-nombre').value.trim();
-    var edificio = document.getElementById('f-unidad').value.trim();
-    var wa = document.getElementById('f-whatsapp').value.trim();
-    var tour = document.getElementById('f-tour').value;
-    var mod = document.getElementById('f-modalidad').value;
-    var fecha = document.getElementById('f-fecha').value;
-    var personas = document.getElementById('f-personas').value.trim();
-    var notas = document.getElementById('f-notas').value.trim();
-
-    if (!nombre) { alert('Por favor ingresa tu nombre.'); return; }
-    if (!tour) { alert('Por favor selecciona un tour.'); return; }
-    if (!fecha) { alert('Por favor elige una fecha.'); return; }
-
-    // Build WhatsApp Message
-    var waMsg = '🌊 *Nueva Consulta — Aldea Mayab*%0A%0A'+ 
-                '*Nombre:* ' + encodeURIComponent(nombre) + '%0A' +
-                '*Edificio/Depto:* ' + encodeURIComponent(edificio|| '—') + '%0A' +
-                '*WhatsApp:* ' + encodeURIComponent(wa) + '%0A' +
-                '*Tour:* ' + encodeURIComponent(tour) + '%0A' +
-                '*Modalidad:* ' + encodeURIComponent(mod|| 'N/A') + '%0A' +
-                '*Fecha:* ' + encodeURIComponent(fecha) + '%0A' +
-                '*Personas:* ' + encodeURIComponent(personas|| '—') + '%0A' +
-                '*Notas:* ' + encodeURIComponent(notas|| '—');
-
-    // Open WhatsApp
-    window.open('https://wa.me/529842411410?text=' + waMsg, '_blank');
-}
-// ── SCROLL REVEAL ──
-function triggerReveal() {
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
-            if (e.isIntersecting) { 
-                setTimeout(() => e.target.classList.add('visible'), i * 65); 
-                io.unobserve(e.target); 
-            }
-        });
-    }, { threshold: 0.07 });
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
-}
-triggerReveal();
-
-// ── i18n ENGINE ──
-const translations = {
-    es: {
-        "nav.tours": "Tours & Actividades", "nav.gastro": "Gastronomía", "nav.link.tours": "Tours", "nav.link.kayak": "Kayak", "nav.link.recorrido": "Recorrido", "nav.link.reservar": "Reservar", "nav.link.breakfast": "Desayunos", "nav.link.lunch": "Comidas", "nav.link.dinner": "Cenas",
-        "hero.eyebrow": "Aldea Mayab · Bacalar, Quintana Roo", "hero.sub": "Guía de huéspedes · Aldea Mayab", "hero.curated": "Curated Vacation Homes",
-        "form.submit": "Consultar disponibilidad por WhatsApp", "form.nombre": "Nombre completo", "form.edificio": "Edificio / Depto", "form.wa": "WhatsApp", "form.select_tour": "Selecciona un tour", "form.mod": "Modalidad", "form.fecha": "Fecha preferida", "form.personas": "Número de personas", "form.notas": "Comentarios o peticiones especiales", "form.time_label": "Horario preferido", "form.time_placeholder": "Seleccionar horario", "form.whatsapp_btn": "Contactar por WhatsApp", "form.success_title": "¡Solicitud enviada!", "form.success_msg": "Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu reserva.", "form.wa_btn": "Escribir al WhatsApp",
-        "prac.what": "¿Qué llevar?", "prac.swimsuit": "Traje de baño", "prac.swimsuit_note": "Puesto desde que salgas de tu depto", "prac.hat": "Sombrero o gorra", "prac.hat_note": "Protección solar esencial", "prac.towel": "Toalla", "prac.towel_note": "Para secarte entre paradas", "prac.uv": "Ropa UV", "prac.uv_note": "Recomendada para tours largos", "prac.cash": "Efectivo extra", "prac.cash_note": "Para propinas y recuerdos", "prac.notes_title": "Notas Importantes", "prac.departure": "Punto de salida", "prac.departure_val": "Casa China — sin traslados", "prac.access": "Accesibilidad", "prac.access_val": "No hay acceso para silla de ruedas ni carriola", "prac.babies": "Bebés", "prac.babies_val": "No contamos con asientos para bebés", "prac.health": "Salud", "prac.health_val": "No recomendable con condiciones cardíacas", "prac.season": "Temporada", "prac.season_val": "Horarios sujetos a cambio", "prac.payments": "Pagos & Cancelación", "prac.cards": "Tarjetas aceptadas", "prac.cards_val": "Visa · Mastercard · Amex", "prac.refund": "Reembolso total", "prac.refund_val": "Cancelaciones con +24 hrs de anticipación", "prac.norefund": "Sin reembolso", "prac.norefund_val": "Cancelaciones con menos de 24 hrs", "prac.packages": "Paquetes privados", "prac.packages_val": "Pregunta por alimentos y bebidas adicionales",
-        "gastro.headline": "Bacalar en el Paladar", "gastro.intro": "Una guía gastronómica curada por Lagoona para que vivas Bacalar a través de sus sabores. Ordenados por momentos del día.", "gastro.label": "Gastronomía", "gastro.title.prefix": "Sabores de", "gastro.em": "Bacalar", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "disc.10pct": "10% descuento · di que vienes de Aldea Mayab", "disc.5pct": "5% descuento · di que vienes de Aldea Mayab", "resto1.desc": "Un café-restaurante muy querido en el centro, famoso por su pan artesanal, café orgánico y desayunos abundantes. Ambiente tranquilo con música suave.", "resto2.desc": "Moderno y relajado, combina café, panadería y cocina inspirada en ingredientes del Caribe Mexicano. Perfecto para un brunch sin apuros.", "resto3.desc": "Panadería artesanal muy popular, conocida por su repostería estilo francés y desayunos frescos. Cola frecuente — vale la pena esperar.", "resto4.desc": "Restaurante contemporáneo dentro del hotel AMAINAH, con vista espectacular a la laguna y una cocina que destaca por sus ingredientes frescos y presentaciones cuidadas.", "resto5.desc": "Restaurante frente al agua con vista directa a la laguna. Especialidad en mariscos frescos y coctelería. Ambiente relajado y familiar.", "resto6.desc": "Cocina de autor con ingredientes locales. Menú cambiante con opciones vegetarianas y mariscos. Ambiente íntimo y elegante.", "resto7.desc": "Cocina contemporánea con toques mexicanos. Ambiente moderno y acogedor. Ideal para una cena especial.", "resto8.desc": "Cocina mexicana tradicional con un toque moderno. Especialidad en tacos y antojitos mexicanos. Ambiente casual.", "resto9.desc": "Cocina italiana auténtica en el corazón de Bacalar. Pastas frescas, pizzas y vinos. Ambiente romántico y acogedor.",
-        "kayak.desc": "La forma más silenciosa y sustentable de conocer la laguna. Llega a rincones donde los botes no pueden entrar. Disponible todo el día desde el Casa China.", "kayak.reserve": "Reservar →", "tours.em": "aventura", "recorrido.em": "recorrido", "recorrido.title.prefix": "El", "booking.em": "experiencia", "practical.em": "zarpar", "practical.title.prefix": "Antes de", "kayak.em": "a tu ritmo", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "form.24h": "24 horas", "form.edificio": "Edificio y departamento", "time.comp": "Comp. 11:00", "time.priv": "Priv. 10:00", "opt.tour1": "Tour Paddle — $550 compartido / $3,000 privado", "opt.tour2": "Tour Velero — $800 compartido / $4,375 privado", "opt.tour3": "Tour Lancha — $450 compartido / $3,750 privado", "opt.tour4": "Tour Pontón — $550 compartido / $4,375 privado", "opt.tour5": "Catamarán Recreativo — $800 compartido / $4,000 privado", "opt.tour6": "Tour Catamarán Premium — $990 compartido / $15,000 privado", "opt.tour7": "Laguna Grill — $6,000 privado", "opt.kayak1": "Kayak Individual — $350 / día", "opt.kayak2": "Kayak Doble — $500 / día", "price.per_person": "MXN por persona", "price.only_private": "Solo Privado", "time.label": "Horario", "time.labels": "Horarios", "time.sunrise": "Al amanecer", "pax1": "1–4 pax · +$400/extra", "pax2": "1–5 pax · +$625/extra", "pax3": "1–6 pax · +$300/extra", "pax4": "1–6 pax · +$375/extra", "pax5": "1–5 personas", "pax6": "1–10 pax · +$650/extra", "pax7": "1–4 personas · persona extra $1,200 MXN", "stop1.name": "Isla de los Pájaros", "stop1.desc": "Santuario de aves", "stop2.name": "Cenote Cocalitos", "stop2.desc": "Estromatolitos únicos", "stop3.name": "Cenote Esmeralda", "stop3.desc": "Aguas cristalinas", "stop4.name": "Cenote La Bruja", "stop4.desc": "Baño & snorkel", "stop5.name": "Canal de los Piratas", "stop5.desc": "Historia maya", "booking.intro": "Completa el formulario y nuestro equipo confirmará tu reserva en menos de 24 horas. Los tours más solicitados tienen disponibilidad limitada.", "form.select_tour": "Selecciona un tour", "form.mod_placeholder": "Compartido o Privado", "form.mod_shared": "Compartido (me uno a grupo)", "form.mod_private": "Privado (solo mi grupo)", "form.notes_placeholder": "Comentarios o peticiones especiales", "form.time_label": "Horario preferido", "form.time_placeholder": "Seleccionar horario", "form.whatsapp_btn": "Contactar por WhatsApp", "form.success_title": "¡Solicitud enviada!", "form.success_msg": "Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu reserva.", "form.wa_btn": "Escribir al WhatsApp", "prac.what": "¿Qué llevar?", "prac.swimsuit": "Traje de baño", "prac.swimsuit_note": "Puesto desde que salgas de tu depto", "prac.hat": "Sombrero o gorra", "prac.hat_note": "Protección solar esencial", "prac.towel": "Toalla", "prac.towel_note": "Para secarte entre paradas", "prac.uv": "Ropa UV", "prac.uv_note": "Recomendada para tours largos", "prac.cash": "Efectivo extra", "prac.cash_note": "Para propinas y recuerdos", "prac.notes_title": "Notas Importantes", "prac.departure": "Punto de salida", "prac.departure_val": "Casa China — sin traslados", "prac.access": "Accesibilidad", "prac.access_val": "No hay acceso para silla de ruedas ni carriola", "prac.babies": "Bebés", "prac.babies_val": "No contamos con asientos para bebés", "prac.health": "Salud", "prac.health_val": "No recomendable con condiciones cardíacas", "prac.season": "Temporada", "prac.season_val": "Horarios sujetos a cambio", "prac.payments": "Pagos & Cancelación", "prac.cards": "Tarjetas aceptadas", "prac.cards_val": "Visa · Mastercard · Amex", "prac.refund": "Reembolso total", "prac.refund_val": "Cancelaciones con +24 hrs de anticipación", "prac.norefund": "Sin reembolso", "prac.norefund_val": "Cancelaciones con menos de 24 hrs", "prac.packages": "Paquetes privados", "prac.packages_val": "Pregunta por alimentos y bebidas adicionales", "gastro.headline": "Bacalar en el Paladar", "gastro.intro": "Una guía gastronómica curada por Lagoona para que vivas Bacalar a través de sus sabores. Ordenados por momentos del día.", "gastro.label": "Gastronomía", "gastro.title.prefix": "Sabores de", "gastro.em": "Bacalar", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "disc.10pct": "10% descuento · di que vienes de Aldea Mayab", "disc.5pct": "5% descuento · di que vienes de Aldea Mayab", "resto1.desc": "Un café-restaurante muy querido en el centro, famoso por su pan artesanal, café orgánico y desayunos abundantes. Ambiente tranquilo con música suave.", "resto2.desc": "Moderno y relajado, combina café, panadería y cocina inspirada en ingredientes del Caribe Mexicano. Perfecto para un brunch sin apuros.", "resto3.desc": "Panadería artesanal muy popular, conocida por su repostería estilo francés y desayunos frescos. Cola frecuente — vale la pena esperar.", "resto4.desc": "Restaurante contemporáneo dentro del hotel AMAINAH, con vista espectacular a la laguna y una cocina que destaca por sus ingredientes frescos y presentaciones cuidadas.", "resto5.desc": "Restaurante frente al agua con vista directa a la laguna. Especialidad en mariscos frescos y coctelería. Ambiente relajado y familiar.", "resto6.desc": "Cocina de autor con ingredientes locales. Menú cambiante con opciones vegetarianas y mariscos. Ambiente íntimo y elegante.", "resto7.desc": "Cocina contemporánea con toques mexicanos. Ambiente moderno y acogedor. Ideal para una cena especial.", "resto8.desc": "Cocina mexicana tradicional con un toque moderno. Especialidad en tacos y antojitos mexicanos. Ambiente casual.", "resto9.desc": "Cocina italiana auténtica en el corazón de Bacalar. Pastas frescas, pizzas y vinos. Ambiente romántico y acogedor.", "kayak.desc": "La forma más silenciosa y sustentable de conocer la laguna. Llega a rincones donde los botes no pueden entrar. Disponible todo el día desde el Casa China.", "kayak.reserve": "Reservar →", "tours.em": "aventura", "recorrido.em": "recorrido", "recorrido.title.prefix": "El", "booking.em": "experiencia", "practical.em": "zarpar", "practical.title.prefix": "Antes de", "kayak.em": "a tu ritmo", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "form.24h": "24 horas", "form.edificio": "Edificio y departamento", "time.comp": "Comp. 11:00", "time.priv": "Priv. 10:00", "opt.tour1": "Tour Paddle — $550 compartido / $3,000 privado", "opt.tour2": "Tour Velero — $800 compartido / $4,375 privado", "opt.tour3": "Tour Lancha — $450 compartido / $3,750 privado", "opt.tour4": "Tour Pontón — $550 compartido / $4,375 privado", "opt.tour5": "Catamarán Recreativo — $800 compartido / $4,000 privado", "opt.tour6": "Tour Catamarán Premium — $990 compartido / $15,000 privado", "opt.tour7": "Laguna Grill — $6,000 privado", "opt.kayak1": "Kayak Individual — $350 / día", "opt.kayak2": "Kayak Doble — $500 / día", "price.per_person": "MXN por persona", "price.only_private": "Solo Privado", "time.label": "Horario", "time.labels": "Horarios", "time.sunrise": "Al amanecer", "pax1": "1–4 pax · +$400/extra", "pax2": "1–5 pax · +$625/extra", "pax3": "1–6 pax · +$300/extra", "pax4": "1–6 pax · +$375/extra", "pax5": "1–5 personas", "pax6": "1–10 pax · +$650/extra", "pax7": "1–4 personas · persona extra $1,200 MXN", "stop1.name": "Isla de los Pájaros", "stop1.desc": "Santuario de aves", "stop2.name": "Cenote Cocalitos", "stop2.desc": "Estromatolitos únicos", "stop3.name": "Cenote Esmeralda", "stop3.desc": "Aguas cristalinas", "stop4.name": "Cenote La Bruja", "stop4.desc": "Baño & snorkel", "stop5.name": "Canal de los Piratas", "stop5.desc": "Historia maya", "booking.intro": "Completa el formulario y nuestro equipo confirmará tu reserva en menos de 24 horas. Los tours más solicitados tienen disponibilidad limitada.", "form.select_tour": "Selecciona un tour", "form.mod_placeholder": "Compartido o Privado", "form.mod_shared": "Compartido (me uno a grupo)", "form.mod_private": "Privado (solo mi grupo)", "form.notes_placeholder": "Comentarios o peticiones especiales", "form.time_label": "Horario preferido", "form.time_placeholder": "Seleccionar horario", "form.whatsapp_btn": "Contactar por WhatsApp", "form.success_title": "¡Solicitud enviada!", "form.success_msg": "Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu reserva.", "form.wa_btn": "Escribir al WhatsApp", "prac.what": "¿Qué llevar?", "prac.swimsuit": "Traje de baño", "prac.swimsuit_note": "Puesto desde que salgas de tu depto", "prac.hat": "Sombrero o gorra", "prac.hat_note": "Protección solar esencial", "prac.towel": "Toalla", "prac.towel_note": "Para secarte entre paradas", "prac.uv": "Ropa UV", "prac.uv_note": "Recomendada para tours largos", "prac.cash": "Efectivo extra", "prac.cash_note": "Para propinas y recuerdos", "prac.notes_title": "Notas Importantes", "prac.departure": "Punto de salida", "prac.departure_val": "Casa China — sin traslados", "prac.access": "Accesibilidad", "prac.access_val": "No hay acceso para silla de ruedas ni carriola", "prac.babies": "Bebés", "prac.babies_val": "No contamos con asientos para bebés", "prac.health": "Salud", "prac.health_val": "No recomendable con condiciones cardíacas", "prac.season": "Temporada", "prac.season_val": "Horarios sujetos a cambio", "prac.payments": "Pagos & Cancelación", "prac.cards": "Tarjetas aceptadas", "prac.cards_val": "Visa · Mastercard · Amex", "prac.refund": "Reembolso total", "prac.refund_val": "Cancelaciones con +24 hrs de anticipación", "prac.norefund": "Sin reembolso", "prac.norefund_val": "Cancelaciones con menos de 24 hrs", "prac.packages": "Paquetes privados", "prac.packages_val": "Pregunta por alimentos y bebidas adicionales", "gastro.headline": "Bacalar en el Paladar", "gastro.intro": "Una guía gastronómica curada por Lagoona para que vivas Bacalar a través de sus sabores. Ordenados por momentos del día.", "gastro.label": "Gastronomía", "gastro.title.prefix": "Sabores de", "gastro.em": "Bacalar", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "disc.10pct": "10% descuento · di que vienes de Aldea Mayab", "disc.5pct": "5% descuento · di que vienes de Aldea Mayab", "resto1.desc": "Un café-restaurante muy querido en el centro, famoso por su pan artesanal, café orgánico y desayunos abundantes. Ambiente tranquilo con música suave.", "resto2.desc": "Moderno y relajado, combina café, panadería y cocina inspirada en ingredientes del Caribe Mexicano. Perfecto para un brunch sin apuros.", "resto3.desc": "Panadería artesanal muy popular, conocida por su repostería estilo francés y desayunos frescos. Cola frecuente — vale la pena esperar.", "resto4.desc": "Restaurante contemporáneo dentro del hotel AMAINAH, con vista espectacular a la laguna y una cocina que destaca por sus ingredientes frescos y presentaciones cuidadas.", "resto5.desc": "Restaurante frente al agua con vista directa a la laguna. Especialidad en mariscos frescos y coctelería. Ambiente relajado y familiar.", "resto6.desc": "Cocina de autor con ingredientes locales. Menú cambiante con opciones vegetarianas y mariscos. Ambiente íntimo y elegante.", "resto7.desc": "Cocina contemporánea con toques mexicanos. Ambiente moderno y acogedor. Ideal para una cena especial.", "resto8.desc": "Cocina mexicana tradicional con un toque moderno. Especialidad en tacos y antojitos mexicanos. Ambiente casual.", "resto9.desc": "Cocina italiana auténtica en el corazón de Bacalar. Pastas frescas, pizzas y vinos. Ambiente romántico y acogedor.", "kayak.desc": "La forma más silenciosa y sustentable de conocer la laguna. Llega a rincones donde los botes no pueden entrar. Disponible todo el día desde el Casa China.", "kayak.reserve": "Reservar →", "tours.em": "aventura", "recorrido.em": "recorrido", "recorrido.title.prefix": "El", "booking.em": "experiencia", "practical.em": "zarpar", "practical.title.prefix": "Antes de", "kayak.em": "a tu ritmo", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "form.24h": "24 horas", "form.edificio": "Edificio y departamento", "time.comp": "Comp. 11:00", "time.priv": "Priv. 10:00", "opt.tour1": "Tour Paddle — $550 compartido / $3,000 privado", "opt.tour2": "Tour Velero — $800 compartido / $4,375 privado", "opt.tour3": "Tour Lancha — $450 compartido / $3,750 privado", "opt.tour4": "Tour Pontón — $550 compartido / $4,375 privado", "opt.tour5": "Catamarán Recreativo — $800 compartido / $4,000 privado", "opt.tour6": "Tour Catamarán Premium — $990 compartido / $15,000 privado", "opt.tour7": "Laguna Grill — $6,000 privado", "opt.kayak1": "Kayak Individual — $350 / día", "opt.kayak2": "Kayak Doble — $500 / día", "price.per_person": "MXN por persona", "price.only_private": "Solo Privado", "time.label": "Horario", "time.labels": "Horarios", "time.sunrise": "Al amanecer", "pax1": "1–4 pax · +$400/extra", "pax2": "1–5 pax · +$625/extra", "pax3": "1–6 pax · +$300/extra", "pax4": "1–6 pax · +$375/extra", "pax5": "1–5 personas", "pax6": "1–10 pax · +$650/extra", "pax7": "1–4 personas · persona extra $1,200 MXN", "stop1.name": "Isla de los Pájaros", "stop1.desc": "Santuario de aves", "stop2.name": "Cenote Cocalitos", "stop2.desc": "Estromatolitos únicos", "stop3.name": "Cenote Esmeralda", "stop3.desc": "Aguas cristalinas", "stop4.name": "Cenote La Bruja", "stop4.desc": "Baño & snorkel", "stop5.name": "Canal de los Piratas", "stop5.desc": "Historia maya", "booking.intro": "Completa el formulario y nuestro equipo confirmará tu reserva en menos de 24 horas. Los tours más solicitados tienen disponibilidad limitada.", "form.select_tour": "Selecciona un tour", "form.mod_placeholder": "Compartido o Privado", "form.mod_shared": "Compartido (me uno a grupo)", "form.mod_private": "Privado (solo mi grupo)", "form.notes_placeholder": "Comentarios o peticiones especiales", "form.time_label": "Horario preferido", "form.time_placeholder": "Seleccionar horario", "form.whatsapp_btn": "Contactar por WhatsApp", "form.success_title": "¡Solicitud enviada!", "form.success_msg": "Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu reserva.", "form.wa_btn": "Escribir al WhatsApp", "prac.what": "¿Qué llevar?", "prac.swimsuit": "Traje de baño", "prac.swimsuit_note": "Puesto desde que salgas de tu depto", "prac.hat": "Sombrero o gorra", "prac.hat_note": "Protección solar esencial", "prac.towel": "Toalla", "prac.towel_note": "Para secarte entre paradas", "prac.uv": "Ropa UV", "prac.uv_note": "Recomendada para tours largos", "prac.cash": "Efectivo extra", "prac.cash_note": "Para propinas y recuerdos", "prac.notes_title": "Notas Importantes", "prac.departure": "Punto de salida", "prac.departure_val": "Casa China — sin traslados", "prac.access": "Accesibilidad", "prac.access_val": "No hay acceso para silla de ruedas ni carriola", "prac.babies": "Bebés", "prac.babies_val": "No contamos con asientos para bebés", "prac.health": "Salud", "prac.health_val": "No recomendable con condiciones cardíacas", "prac.season": "Temporada", "prac.season_val": "Horarios sujetos a cambio", "prac.payments": "Pagos & Cancelación", "prac.cards": "Tarjetas aceptadas", "prac.cards_val": "Visa · Mastercard · Amex", "prac.refund": "Reembolso total", "prac.refund_val": "Cancelaciones con +24 hrs de anticipación", "prac.norefund": "Sin reembolso", "prac.norefund_val": "Cancelaciones con menos de 24 hrs", "prac.packages": "Paquetes privados", "prac.packages_val": "Pregunta por alimentos y bebidas adicionales", "gastro.headline": "Bacalar en el Paladar", "gastro.intro": "Una guía gastronómica curada por Lagoona para que vivas Bacalar a través de sus sabores. Ordenados por momentos del día.", "gastro.label": "Gastronomía", "gastro.title.prefix": "Sabores de", "gastro.em": "Bacalar", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "disc.10pct": "10% descuento · di que vienes de Aldea Mayab", "disc.5pct": "5% descuento · di que vienes de Aldea Mayab", "resto1.desc": "Un café-restaurante muy querido en el centro, famoso por su pan artesanal, café orgánico y desayunos abundantes. Ambiente tranquilo con música suave.", "resto2.desc": "Moderno y relajado, combina café, panadería y cocina inspirada en ingredientes del Caribe Mexicano. Perfecto para un brunch sin apuros.", "resto3.desc": "Panadería artesanal muy popular, conocida por su repostería estilo francés y desayunos frescos. Cola frecuente — vale la pena esperar.", "resto4.desc": "Restaurante contemporáneo dentro del hotel AMAINAH, con vista espectacular a la laguna y una cocina que destaca por sus ingredientes frescos y presentaciones cuidadas.", "resto5.desc": "Restaurante frente al agua con vista directa a la laguna. Especialidad en mariscos frescos y coctelería. Ambiente relajado y familiar.", "resto6.desc": "Cocina de autor con ingredientes locales. Menú cambiante con opciones vegetarianas y mariscos. Ambiente íntimo y elegante.", "resto7.desc": "Cocina contemporánea con toques mexicanos. Ambiente moderno y acogedor. Ideal para una cena especial.", "resto8.desc": "Cocina mexicana tradicional con un toque moderno. Especialidad en tacos y antojitos mexicanos. Ambiente casual.", "resto9.desc": "Cocina italiana auténtica en el corazón de Bacalar. Pastas frescas, pizzas y vinos. Ambiente romántico y acogedor.", "kayak.desc": "La forma más silenciosa y sustentable de conocer la laguna. Llega a rincones donde los botes no pueden entrar. Disponible todo el día desde el Casa China.", "kayak.reserve": "Reservar →", "tours.em": "aventura", "recorrido.em": "recorrido", "recorrido.title.prefix": "El", "booking.em": "experiencia", "practical.em": "zarpar", "practical.title.prefix": "Antes de", "kayak.em": "a tu ritmo", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "form.24h": "24 horas", "form.edificio": "Edificio y departamento", "time.comp": "Comp. 11:00", "time.priv": "Priv. 10:00", "opt.tour1": "Tour Paddle — $550 compartido / $3,000 privado", "opt.tour2": "Tour Velero — $800 compartido / $4,375 privado", "opt.tour3": "Tour Lancha — $450 compartido / $3,750 privado", "opt.tour4": "Tour Pontón — $550 compartido / $4,375 privado", "opt.tour5": "Catamarán Recreativo — $800 compartido / $4,000 privado", "opt.tour6": "Tour Catamarán Premium — $990 compartido / $15,000 privado", "opt.tour7": "Laguna Grill — $6,000 privado", "opt.kayak1": "Kayak Individual — $350 / día", "opt.kayak2": "Kayak Doble — $500 / día", "price.per_person": "MXN por persona", "price.only_private": "Solo Privado", "time.label": "Horario", "time.labels": "Horarios", "time.sunrise": "Al amanecer", "pax1": "1–4 pax · +$400/extra", "pax2": "1–5 pax · +$625/extra", "pax3": "1–6 pax · +$300/extra", "pax4": "1–6 pax · +$375/extra", "pax5": "1–5 personas", "pax6": "1–10 pax · +$650/extra", "pax7": "1–4 personas · persona extra $1,200 MXN", "stop1.name": "Isla de los Pájaros", "stop1.desc": "Santuario de aves", "stop2.name": "Cenote Cocalitos", "stop2.desc": "Estromatolitos únicos", "stop3.name": "Cenote Esmeralda", "stop3.desc": "Aguas cristalinas", "stop4.name": "Cenote La Bruja", "stop4.desc": "Baño & snorkel", "stop5.name": "Canal de los Piratas", "stop5.desc": "Historia maya", "booking.intro": "Completa el formulario y nuestro equipo confirmará tu reserva en menos de 24 horas. Los tours más solicitados tienen disponibilidad limitada.", "form.select_tour": "Selecciona un tour", "form.mod_placeholder": "Compartido o Privado", "form.mod_shared": "Compartido (me uno a grupo)", "form.mod_private": "Privado (solo mi grupo)", "form.notes_placeholder": "Comentarios o peticiones especiales", "form.time_label": "Horario preferido", "form.time_placeholder": "Seleccionar horario", "form.whatsapp_btn": "Contactar por WhatsApp", "form.success_title": "¡Solicitud enviada!", "form.success_msg": "Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu reserva.", "form.wa_btn": "Escribir al WhatsApp", "prac.what": "¿Qué llevar?", "prac.swimsuit": "Traje de baño", "prac.swimsuit_note": "Puesto desde que salgas de tu depto", "prac.hat": "Sombrero o gorra", "prac.hat_note": "Protección solar esencial", "prac.towel": "Toalla", "prac.towel_note": "Para secarte entre paradas", "prac.uv": "Ropa UV", "prac.uv_note": "Recomendada para tours largos", "prac.cash": "Efectivo extra", "prac.cash_note": "Para propinas y recuerdos", "prac.notes_title": "Notas Importantes", "prac.departure": "Punto de salida", "prac.departure_val": "Casa China — sin traslados", "prac.access": "Accesibilidad", "prac.access_val": "No hay acceso para silla de ruedas ni carriola", "prac.babies": "Bebés", "prac.babies_val": "No contamos con asientos para bebés", "prac.health": "Salud", "prac.health_val": "No recomendable con condiciones cardíacas", "prac.season": "Temporada", "prac.season_val": "Horarios sujetos a cambio", "prac.payments": "Pagos & Cancelación", "prac.cards": "Tarjetas aceptadas", "prac.cards_val": "Visa · Mastercard · Amex", "prac.refund": "Reembolso total", "prac.refund_val": "Cancelaciones con +24 hrs de anticipación", "prac.norefund": "Sin reembolso", "prac.norefund_val": "Cancelaciones con menos de 24 hrs", "prac.packages": "Paquetes privados", "prac.packages_val": "Pregunta por alimentos y bebidas adicionales", "gastro.headline": "Bacalar en el Paladar", "gastro.intro": "Una guía gastronómica curada por Lagoona para que vivas Bacalar a través de sus sabores. Ordenados por momentos del día.", "gastro.label": "Gastronomía", "gastro.title.prefix": "Sabores de", "gastro.em": "Bacalar", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "disc.10pct": "10% descuento · di que vienes de Aldea Mayab", "disc.5pct": "5% descuento · di que vienes de Aldea Mayab", "resto1.desc": "Un café-restaurante muy querido en el centro, famoso por su pan artesanal, café orgánico y desayunos abundantes. Ambiente tranquilo con música suave.", "resto2.desc": "Moderno y relajado, combina café, panadería y cocina inspirada en ingredientes del Caribe Mexicano. Perfecto para un brunch sin apuros.", "resto3.desc": "Panadería artesanal muy popular, conocida por su repostería estilo francés y desayunos frescos. Cola frecuente — vale la pena esperar.", "resto4.desc": "Restaurante contemporáneo dentro del hotel AMAINAH, con vista espectacular a la laguna y una cocina que destaca por sus ingredientes frescos y presentaciones cuidadas.", "resto5.desc": "Restaurante frente al agua con vista directa a la laguna. Especialidad en mariscos frescos y coctelería. Ambiente relajado y familiar.", "resto6.desc": "Cocina de autor con ingredientes locales. Menú cambiante con opciones vegetarianas y mariscos. Ambiente íntimo y elegante.", "resto7.desc": "Cocina contemporánea con toques mexicanos. Ambiente moderno y acogedor. Ideal para una cena especial.", "resto8.desc": "Cocina mexicana tradicional con un toque moderno. Especialidad en tacos y antojitos mexicanos. Ambiente casual.", "resto9.desc": "Cocina italiana auténtica en el corazón de Bacalar. Pastas frescas, pizzas y vinos. Ambiente romántico y acogedor.", "kayak.desc": "La forma más silenciosa y sustentable de conocer la laguna. Llega a rincones donde los botes no pueden entrar. Disponible todo el día desde el Casa China.", "kayak.reserve": "Reservar →", "tours.em": "aventura", "recorrido.em": "recorrido", "recorrido.title.prefix": "El", "booking.em": "experiencia", "practical.em": "zarpar", "practical.title.prefix": "Antes de", "kayak.em": "a tu ritmo", "gastro.breakfast_em": "Desayunos & Brunch", "gastro.lunch_em": "Comidas & Lunch", "gastro.bars_em": "Bares & Ambiente", "form.24h": "24 horas", "form.edificio": "Edificio y departamento", "time.comp": "Comp. 11:00", "time.priv": "Priv. 10:00", "opt.tour1": "Tour Paddle — $550 compartido / $3,000 privado", "opt.tour2": "Tour Velero — $800 compartido / $4,375 privado", "opt.tour3": "Tour Lancha — $450 compartido / $3,750 privado", "opt.tour4": "Tour Pontón — $550 compartido / $4,375 privado", "opt.tour5": "Catamarán Recreativo — $800 compartido / $4,000 privado", "opt.tour6": "Tour Catamarán Premium — $990 compartido / $15,000 privado", "opt.tour7": "Laguna Grill — $6,000 privado", "opt.kayak1": "Kayak Individual — $350 / día", "opt.kayak2": "Kayak Doble — $500 / día", "price.per_person": "MXN por persona", "price.only_private": "Solo Privado", "time.label": "Horario", "time.labels": "Horarios", "time.sunrise": "Al amanecer", "pax1": "1–4 pax · +$400/extra", "pax2": "1–5 pax · +$625/extra", "pax3": "1–6 pax · +$300/extra", "pax4": "1–6 pax · +$375/extra", "pax5": "1–5 personas", "pax6": "1–10 pax · +$650/extra", "pax7": "1–4 personas · persona extra $1,200 MXN", "stop1.name": "Isla de los Pájaros", "stop1.desc": "Santuario de aves", "stop2.name": "Cenote Cocalitos", "stop2.desc": "Estromatolitos únicos", "stop3.name": "Cenote Esmeralda", "stop3.desc": "Aguas cristalinas", "stop4.name": "Cenote La Bruja", "stop4.desc": "Baño & snorkel", "stop5.name": "Canal de los Piratas", "stop5.desc": "Historia maya", "booking.intro": "Completa el formulario y nuestro equipo confirmará tu reserva en menos de 24 horas. Los tours más solicitados tienen disponibilidad limitada.", "form.select_tour": "Selecciona un tour", "form.mod_placeholder": "Compartido o Privado", "form.mod_shared": "Compartido (me uno a grupo)", "form.mod_private": "Privado (solo mi grupo)", "form.notes_placeholder": "Comentarios o peticiones especiales", "form.time_label": "Horario preferido", "form.time_placeholder": "Seleccionar horario", "form.whatsapp_btn": "Contactar por WhatsApp", "form.success_title": "¡Solicitud enviada!", "form.success_msg": "Nuestro equipo se pondrá en contacto contigo en menos de 24 horas para confirmar los detalles de tu reserva.", "form.wa_btn": "Escribir al WhatsApp", "footer.copy": "© Lagoona Curated Vacation Homes · All rights reserved", "footer.sub": "Curated Vacation Homes · Aldea Mayab", "footer.location": "Bacalar, Quintana Roo, México"
-    },
-    en: {
-        "nav.tours": "Tours & Activities", "nav.gastro": "Gastronomy", "nav.link.tours": "Tours", "nav.link.kayak": "Kayak", "nav.link.recorrido": "Tour Route", "nav.link.reservar": "Book", "nav.link.breakfast": "Breakfast", "nav.link.lunch": "Lunch", "nav.link.dinner": "Dinner",
-        "hero.eyebrow": "Aldea Mayab · Bacalar, Quintana Roo", "hero.sub": "Guest Guide · Aldea Mayab", "hero.curated": "Curated Vacation Homes",
-        "form.submit": "Check Availability via WhatsApp", "form.nombre": "Full Name", "form.edificio": "Building / Unit", "form.wa": "WhatsApp", "form.select_tour": "Select a tour", "form.mod": "Modality", "form.fecha": "Preferred Date", "form.personas": "Number of People", "form.notas": "Comments or Special Requests", "form.time_label": "Preferred Time", "form.time_placeholder": "Select time", "form.whatsapp_btn": "Contact via WhatsApp", "form.success_title": "Request Sent!", "form.success_msg": "Our team will contact you within 24 hours to confirm your reservation details.", "form.wa_btn": "Write on WhatsApp",
-        "prac.what": "What to Bring?", "prac.swimsuit": "Swimsuit", "prac.swimsuit_note": "Wear it before leaving your unit", "prac.hat": "Hat or Cap", "prac.hat_note": "Essential sun protection", "prac.towel": "Towel", "prac.towel_note": "To dry off between stops", "prac.uv": "UV Clothing", "prac.uv_note": "Recommended for long tours", "prac.cash": "Extra Cash", "prac.cash_note": "For tips and souvenirs", "prac.notes_title": "Important Notes", "prac.departure": "Departure Point", "prac.departure_val": "Casa China — no transfers", "prac.access": "Accessibility", "prac.access_val": "No access for wheelchairs or strollers", "prac.babies": "Babies", "prac.babies_val": "No baby seats available", "prac.health": "Health", "prac.health_val": "Not recommended for heart conditions", "prac.season": "Season", "prac.season_val": "Schedules subject to change", "prac.payments": "Payments & Cancellation", "prac.cards": "Accepted Cards", "prac.cards_val": "Visa · Mastercard · Amex", "prac.refund": "Full Refund", "prac.refund_val": "Cancellations with +24 hrs notice", "prac.norefund": "No Refund", "prac.norefund_val": "Cancellations with less than 24 hrs", "prac.packages": "Private Packages", "prac.packages_val": "Ask about additional food & drinks",
-        "gastro.headline": "Bacalar on the Palate", "gastro.intro": "A gastronomic guide curated by Lagoona so you can experience Bacalar through its flavors. Organized by time of day.", "gastro.label": "Gastronomy", "gastro.title.prefix": "Flavors of", "gastro.em": "Bacalar", "gastro.breakfast_em": "Breakfast & Brunch", "gastro.lunch_em": "Lunch", "gastro.bars_em": "Bars & Nightlife", "disc.10pct": "10% discount · mention Aldea Mayab", "disc.5pct": "5% discount · mention Aldea Mayab", "resto1.desc": "A beloved café-restaurant in the center, famous for its artisan bread, organic coffee and generous breakfasts. Relaxed atmosphere with soft music.", "resto2.desc": "Modern and laid-back, combining coffee, bakery and cuisine inspired by Mexican Caribbean ingredients. Perfect for an unhurried brunch.", "resto3.desc": "Very popular artisan bakery, known for its French-style pastries and fresh breakfasts. Frequent line — worth the wait.", "resto4.desc": "Contemporary restaurant inside AMAINAH hotel, with spectacular lagoon views and a kitchen that stands out for its fresh ingredients and careful presentations.", "resto5.desc": "Waterfront restaurant with direct lagoon views. Speciality in fresh seafood and cocktails. Relaxed and family-friendly atmosphere.", "resto6.desc": "Author cuisine with local ingredients. Changing menu with vegetarian and seafood options. Intimate and elegant atmosphere.", "resto7.desc": "Contemporary cuisine with Mexican touches. Modern and cozy atmosphere. Ideal for a special dinner.", "resto8.desc": "Traditional Mexican cuisine with a modern touch. Speciality in tacos and Mexican snacks. Casual atmosphere.", "resto9.desc": "Authentic Italian cuisine in the heart of Bacalar. Fresh pastas, pizzas and wines. Romantic and cozy atmosphere.",
-        "kayak.desc": "The most silent and sustainable way to discover the lagoon. Reach corners where boats cannot enter. Available all day from Casa China.", "kayak.reserve": "Book now →", "tours.em": "adventure", "recorrido.em": "route", "recorrido.title.prefix": "The", "booking.em": "experience", "practical.em": "set sail", "practical.title.prefix": "Before", "kayak.em": "at your pace", "gastro.breakfast_em": "Breakfast & Brunch", "gastro.lunch_em": "Lunch", "gastro.bars_em": "Bars & Nightlife", "form.24h": "24 hours", "form.edificio": "Building & unit", "time.comp": "Shared 11:00", "time.priv": "Priv. 10:00", "opt.tour1": "Paddle Tour — $550 shared / $3,000 private", "opt.tour2": "Sailboat Tour — $800 shared / $4,375 private", "opt.tour3": "Boat Tour — $450 shared / $3,750 private", "opt.tour4": "Pontoon Tour — $550 shared / $4,375 private", "opt.tour5": "Recreational Catamaran — $800 shared / $4,000 private", "opt.tour6": "Premium Catamaran Tour — $990 shared / $15,000 private", "opt.tour7": "Laguna Grill — $6,000 private", "opt.kayak1": "Individual Kayak — $350 / day", "opt.kayak2": "Double Kayak — $500 / day", "price.per_person": "MXN per person", "price.only_private": "Private Only", "time.label": "Time", "time.labels": "Times", "time.sunrise": "At sunrise", "pax1": "1–4 pax · +$400/extra", "pax2": "1–5 pax · +$625/extra", "pax3": "1–6 pax · +$300/extra", "pax4": "1–6 pax · +$375/extra", "pax5": "1–5 people", "pax6": "1–10 pax · +$650/extra", "pax7": "1–4 people · extra person $1,200 MXN", "stop1.name": "Bird Island", "stop1.desc": "Bird sanctuary", "stop2.name": "Cocalitos Cenote", "stop2.desc": "Unique stromatolites", "stop3.name": "Esmeralda Cenote", "stop3.desc": "Crystal clear waters", "stop4.name": "La Bruja Cenote", "stop4.desc": "Bath & snorkel", "stop5.name": "Pirates Channel", "stop5.desc": "Mayan history", "booking.intro": "Complete the form and our team will confirm your reservation in less than 24 hours. Most requested tours have limited availability.", "form.select_tour": "Select a tour", "form.mod_placeholder": "Shared or Private", "form.mod_shared": "Shared (join a group)", "form.mod_private": "Private (just my group)", "form.notes_placeholder": "Comments or special requests", "form.time_label": "Preferred time", "form.time_placeholder": "Select time", "form.whatsapp_btn": "Contact via WhatsApp", "form.success_title": "Request Sent!", "form.success_msg": "Our team will contact you within 24 hours to confirm your reservation details.", "form.wa_btn": "Write on WhatsApp", "footer.copy": "© Lagoona Curated Vacation Homes · All rights reserved", "footer.sub": "Curated Vacation Homes · Aldea Mayab", "footer.location": "Bacalar, Quintana Roo, México"
-    }
-};
-let currentLang = 'es';
-function applyLang(lang) {
-    currentLang = lang;
-    localStorage.setItem('lagoona_lang', lang);
-    const t = translations[lang];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key] === undefined) return;
-        if (el.tagName === 'OPTION' || el.children.length === 0) {
-            el.textContent = t[key];
-            return;
-        }
-        const firstText = Array.from(el.childNodes).find(n => n.nodeType === 3);
-        if (firstText) firstText.textContent = t[key];
-    });
-    document.documentElement.lang = lang;
-}
-// Init Lang
-const savedLang = localStorage.getItem('lagoona_lang');
-if(savedLang && translations[savedLang]) applyLang(savedLang);
-</script>
+  <footer>
+    Menú de Actividades AM • © 2026 Grupo Laguna Collection
+  </footer>
 </body>
 </html>
