@@ -24,7 +24,7 @@ button{font:inherit}
 
 /* HERO */
 .hero{height:100vh;min-height:580px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('Img/hero%portada.jpg') center/cover no-repeat;transform:scale(1.04)}
+.hero-bg{position:absolute;inset:0;background:url('img/photo.jpg') center/cover no-repeat;transform:scale(1.04)}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,35,35,.18),rgba(13,35,35,.46),rgba(245,239,230,.12));backdrop-filter:blur(1px)}
 .hero-content{position:relative;z-index:2;text-align:center;color:#fff;padding:24px;max-width:900px;animation:fadeUp 1s ease both}
 .hero-eyebrow{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;opacity:.92;margin-bottom:14px}
@@ -50,7 +50,6 @@ button{font:inherit}
 .nav-reserve{padding:10px 14px;border-radius:999px;background:var(--teal);color:#fff!important}
 
 /* GENERIC */
-.page{display:block}
 .section-shell{padding:70px 20px}
 .section-intro{max-width:900px;margin:0 auto 34px;text-align:center}
 .section-kicker{font-size:.8rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
@@ -132,7 +131,7 @@ button{font:inherit}
     <p class="hero-sub">Guía de huéspedes · Aldea Mayab</p>
     <div class="hero-divider"></div>
     <p class="hero-tagline">Tours, actividades y gastronomía en Bacalar</p>
-    <a href="#" class="hero-cta" data-target-page="tours">Explorar</a>
+    <a href="#tours-section" class="hero-cta">Explorar</a>
   </div>
   <div class="scroll-hint"><div class="scroll-line"></div>Descubrir</div>
 </section>
@@ -141,9 +140,9 @@ button{font:inherit}
   <a class="nav-logo" href="#" data-target-page="tours">LAGOONA</a>
   <div class="nav-right">
     <div class="nav-tabs" id="nav-tab-area">
-      <button class="nav-tab-btn active" data-page="tours">Tours & Actividades</button>
-      <button class="nav-tab-btn" data-page="amenidades">Amenidades</button>
-      <button class="nav-tab-btn" data-page="servicios">Servicios</button>
+      <a class="nav-tab-btn active" href="#tours-section">Tours & Actividades</a>
+      <a class="nav-tab-btn" href="#amenidades-section">Amenidades</a>
+      <a class="nav-tab-btn" href="#servicios-section">Servicios</a>
     </div>
     <div class="nav-links">
       <a href="#tours-section">Tours</a>
@@ -155,48 +154,42 @@ button{font:inherit}
 </nav>
 
 <main>
-  <section class="page active" id="page-tours">
-    <div class="section-shell" id="tours-section">
-      <div class="section-intro reveal">
-        <p class="section-kicker">Experiencias</p>
-        <h2 class="section-title">Tours & actividades</h2>
-        <p class="section-text">Conservé la estética editorial, las tipografías, el hero, las tarjetas y las transiciones suaves. La mejora está en la estructura y en quitar eventos inline y la imagen base64 pesada del hero.</p>
-      </div>
-      <div class="tours-wrap">
-        <div class="tour-grid" id="tour-grid"></div>
-      </div>
+  <section class="section-shell" id="tours-section">
+    <div class="section-intro reveal visible">
+      <p class="section-kicker">Experiencias</p>
+      <h2 class="section-title">Tours & actividades</h2>
+      <p class="section-text">Conservé la estética editorial, las tipografías, el hero, las tarjetas y las transiciones suaves. La mejora está en la estructura y en quitar eventos inline y la imagen base64 pesada del hero.</p>
+    </div>
+    <div class="tours-wrap">
+      <div class="tour-grid" id="tour-grid"></div>
     </div>
   </section>
 
-  <section class="page" id="page-amenidades">
-    <div class="section-shell" id="amenidades-section">
-      <div class="section-intro reveal">
-        <p class="section-kicker">Complementos</p>
-        <h2 class="section-title">Amenidades</h2>
-        <p class="section-text">Quedan conectadas a tu carpeta <strong>img/</strong>. Si alguna no aparece, solo cambia la ruta en el arreglo de datos.</p>
-      </div>
-      <div class="cards-wrap">
-        <div class="cards-grid" id="amenities-grid"></div>
-      </div>
+  <section class="section-shell" id="amenidades-section">
+    <div class="section-intro reveal visible">
+      <p class="section-kicker">Complementos</p>
+      <h2 class="section-title">Amenidades</h2>
+      <p class="section-text">Quedan conectadas a tu carpeta <strong>img/</strong>. Si alguna no aparece, solo cambia la ruta en el arreglo de datos.</p>
+    </div>
+    <div class="cards-wrap">
+      <div class="cards-grid" id="amenities-grid"></div>
     </div>
   </section>
 
-  <section class="page" id="page-servicios">
-    <div class="section-shell" id="servicios-section">
-      <div class="section-intro reveal">
-        <p class="section-kicker">Hospitalidad</p>
-        <h2 class="section-title">Servicios especiales</h2>
-        <p class="section-text">Mismo look and feel, pero con tarjetas generadas desde datos para que actualizar el contenido sea mucho más rápido.</p>
-      </div>
-      <div class="cards-wrap">
-        <div class="cards-grid" id="services-grid"></div>
-      </div>
+  <section class="section-shell" id="servicios-section">
+    <div class="section-intro reveal visible">
+      <p class="section-kicker">Hospitalidad</p>
+      <h2 class="section-title">Servicios especiales</h2>
+      <p class="section-text">Mismo look and feel, pero con tarjetas generadas desde datos para que actualizar el contenido sea mucho más rápido.</p>
+    </div>
+    <div class="cards-wrap">
+      <div class="cards-grid" id="services-grid"></div>
     </div>
   </section>
 
   <section class="section-shell" id="reservar">
     <div class="booking-shell">
-      <div class="map-box reveal">
+      <div class="map-box reveal visible">
         <iframe
           class="map-frame"
           src="https://www.google.com/maps/d/embed?mid=1bQLaBf2bxeTxZlb0_AOnvi7ETo6s_uM&ehbc=2E312F"
@@ -204,7 +197,7 @@ button{font:inherit}
           referrerpolicy="no-referrer-when-downgrade"
           title="Mapa de recomendaciones en Bacalar"></iframe>
       </div>
-      <div class="booking-box reveal">
+      <div class="booking-box reveal visible">
         <h3 class="booking-title">Reservar por WhatsApp</h3>
         <p class="booking-desc">El formulario conserva el flujo original, pero ahora genera el mensaje con JavaScript limpio.</p>
         <form class="booking-form" id="booking-form">
@@ -339,21 +332,21 @@ const services = [
   {name:'Laguna Grill', tag:'Parrilla', image:'img/lagunagrill.png', desc:'Experiencia de parrilla con atmósfera relajada.', message:'Quiero información sobre Laguna Grill'}
 ];
 
-function showPage(page){
-  const targetMap = {
-    tours: 'tours-section',
-    amenidades: 'amenidades-section',
-    servicios: 'servicios-section'
+function setActiveNavByHash(){
+  const hash = window.location.hash;
+  const map = {
+    '#tours-section': 'Tours & Actividades',
+    '#amenidades-section': 'Amenidades',
+    '#servicios-section': 'Servicios'
   };
 
-  document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.page === page);
-  });
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
 
-  const targetId = targetMap[page];
-  const targetEl = document.getElementById(targetId);
-  if(targetEl){
-    targetEl.scrollIntoView({ behavior:'smooth', block:'start' });
+  const active = [...document.querySelectorAll('.nav-tab-btn')].find(btn => btn.getAttribute('href') === hash);
+  if(active){
+    active.classList.add('active');
+  } else {
+    document.querySelector('.nav-tab-btn')?.classList.add('active');
   }
 }
 
@@ -433,23 +426,21 @@ function setupReveal(){
 }
 
 document.addEventListener('click', e => {
-  const tab = e.target.closest('.nav-tab-btn');
-  if(tab){
-    e.preventDefault();
-    showPage(tab.dataset.page);
-    return;
-  }
-
-  const targetPage = e.target.closest('[data-target-page]');
-  if(targetPage){
-    e.preventDefault();
-    showPage(targetPage.dataset.targetPage);
-    return;
-  }
-
   const trigger = e.target.closest('[data-message]');
   if(trigger){
     whatsapp(`Hola, me interesa: ${trigger.dataset.message}`);
+    return;
+  }
+
+  const navLink = e.target.closest('.nav-tab-btn, .nav-links a, .hero-cta');
+  if(navLink && navLink.getAttribute('href')?.startsWith('#')){
+    const target = document.querySelector(navLink.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
+      history.replaceState(null, '', navLink.getAttribute('href'));
+      setActiveNavByHash();
+    }
   }
 });
 
@@ -479,7 +470,10 @@ document.getElementById('booking-form').addEventListener('submit', e => {
 render();
 setTimeout(() => {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  setActiveNavByHash();
 }, 150);
+
+window.addEventListener('hashchange', setActiveNavByHash);
 </script>
 </body>
 </html>
