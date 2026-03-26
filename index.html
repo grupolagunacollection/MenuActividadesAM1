@@ -50,8 +50,7 @@ button{font:inherit}
 .nav-reserve{padding:10px 14px;border-radius:999px;background:var(--teal);color:#fff!important}
 
 /* GENERIC */
-.page{display:none}
-.page.active{display:block}
+.page{display:block}
 .section-shell{padding:70px 20px}
 .section-intro{max-width:900px;margin:0 auto 34px;text-align:center}
 .section-kicker{font-size:.8rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
@@ -341,11 +340,21 @@ const services = [
 ];
 
 function showPage(page){
-  document.querySelectorAll('.page').forEach(section => section.classList.remove('active'));
-  const target = document.getElementById(`page-${page}`);
-  if(target) target.classList.add('active');
-  document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page));
-  window.scrollTo({top: document.querySelector('.sticky-nav').offsetTop, behavior:'smooth'});
+  const targetMap = {
+    tours: 'tours-section',
+    amenidades: 'amenidades-section',
+    servicios: 'servicios-section'
+  };
+
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === page);
+  });
+
+  const targetId = targetMap[page];
+  const targetEl = document.getElementById(targetId);
+  if(targetEl){
+    targetEl.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
 }
 
 function whatsapp(message){
@@ -425,19 +434,23 @@ function setupReveal(){
 
 document.addEventListener('click', e => {
   const tab = e.target.closest('.nav-tab-btn');
-  if(tab) showPage(tab.dataset.page);
+  if(tab){
+    e.preventDefault();
+    showPage(tab.dataset.page);
+    return;
+  }
 
   const targetPage = e.target.closest('[data-target-page]');
   if(targetPage){
     e.preventDefault();
     showPage(targetPage.dataset.targetPage);
-    setTimeout(() => {
-      document.getElementById('tours-section')?.scrollIntoView({behavior:'smooth'});
-    }, 80);
+    return;
   }
 
   const trigger = e.target.closest('[data-message]');
-  if(trigger) whatsapp(`Hola, me interesa: ${trigger.dataset.message}`);
+  if(trigger){
+    whatsapp(`Hola, me interesa: ${trigger.dataset.message}`);
+  }
 });
 
 document.addEventListener('keydown', e => {
@@ -464,6 +477,9 @@ document.getElementById('booking-form').addEventListener('submit', e => {
 });
 
 render();
+setTimeout(() => {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+}, 150);
 </script>
 </body>
 </html>
