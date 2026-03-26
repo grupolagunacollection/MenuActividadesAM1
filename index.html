@@ -1,159 +1,469 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Menú de Actividades</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    }
-    body {
-      background-color: #f5f5f5;
-      color: #333;
-      line-height: 1.6;
-    }
-    header {
-      background-color: #2c5aa0;
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 0.4rem;
-    }
-    header p {
-      opacity: 0.9;
-      font-size: 1rem;
-    }
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h2 {
-      color: #2c5aa0;
-      border-bottom: 2px solid #2c5aa0;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.2rem;
-      font-size: 1.4rem;
-    }
-    .actividad {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 0.8rem;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    }
-    .actividad h3 {
-      margin-bottom: 0.3rem;
-      color: #1a3e6f;
-    }
-    .actividad p {
-      font-size: 0.95rem;
-      color: #555;
-    }
-    form {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    }
-    label {
-      display: block;
-      margin: 0.6rem 0 0.3rem;
-      font-weight: 600;
-      color: #333;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.6rem 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    button {
-      margin-top: 1rem;
-      padding: 0.7rem 1.2rem;
-      background-color: #2c5aa0;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1d4480;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #f0f0f0;
-      color: #666;
-      font-size: 0.9rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lagoona · Aldea Mayab · Bacalar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box}
+img{max-width:100%;height:auto;display:block}
+:root{
+  --sand:#f5efe6;--sand-dark:#e8ddd0;
+  --teal:#1a4a4a;--teal-mid:#2d6b6b;--teal-light:#4a9090;
+  --gold:#b8955a;--gold-light:#d4b07a;
+  --ink:#1c1c1c;--muted:#7a7068;
+  --shadow:0 16px 48px rgba(17,36,36,.12);
+  --radius:26px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--sand);color:var(--ink);font-family:'Jost',sans-serif;font-weight:300;font-size:16px;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+
+/* HERO */
+.hero{height:100vh;min-height:580px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('img/photo.jpg') center/cover no-repeat;transform:scale(1.04)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,35,35,.18),rgba(13,35,35,.46),rgba(245,239,230,.12));backdrop-filter:blur(1px)}
+.hero-content{position:relative;z-index:2;text-align:center;color:#fff;padding:24px;max-width:900px;animation:fadeUp 1s ease both}
+.hero-eyebrow{font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;opacity:.92;margin-bottom:14px}
+.hero-brand{font-family:'Cormorant Garamond',serif;font-size:clamp(4.2rem,12vw,8.6rem);font-weight:400;letter-spacing:.16em;line-height:.9}
+.hero-curated{font-size:1rem;letter-spacing:.22em;text-transform:uppercase;opacity:.92;margin-top:8px}
+.hero-sub{font-size:.98rem;letter-spacing:.20em;text-transform:uppercase;opacity:.88;margin-top:12px}
+.hero-divider{width:92px;height:1px;background:rgba(255,255,255,.75);margin:24px auto}
+.hero-tagline{font-size:clamp(1rem,2vw,1.15rem);letter-spacing:.08em;text-transform:uppercase;opacity:.95}
+.hero-cta{display:inline-flex;align-items:center;justify-content:center;margin-top:28px;min-width:180px;padding:14px 26px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);backdrop-filter:blur(8px);font-weight:400;letter-spacing:.12em;text-transform:uppercase;transition:all .3s ease}
+.hero-cta:hover{transform:translateY(-2px);background:rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(0,0,0,.16)}
+.scroll-hint{position:absolute;z-index:2;bottom:24px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;opacity:.88}
+.scroll-line{width:1px;height:42px;background:linear-gradient(to bottom,rgba(255,255,255,.1),rgba(255,255,255,.95));animation:scrollPulse 1.8s ease-in-out infinite}
+
+/* NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px;background:rgba(245,239,230,.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(26,74,74,.08)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;letter-spacing:.16em;color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.nav-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.nav-tab-btn{border:none;background:transparent;padding:10px 14px;border-radius:999px;color:var(--teal);cursor:pointer;transition:all .25s ease}
+.nav-tab-btn:hover,.nav-tab-btn.active{background:rgba(26,74,74,.08)}
+.nav-links{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.nav-links a{font-size:.92rem;color:var(--teal);opacity:.9}
+.nav-reserve{padding:10px 14px;border-radius:999px;background:var(--teal);color:#fff!important}
+
+/* GENERIC */
+.page{display:none}
+.page.active{display:block}
+.section-shell{padding:70px 20px}
+.section-intro{max-width:900px;margin:0 auto 34px;text-align:center}
+.section-kicker{font-size:.8rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.section-title{font-family:'Cormorant Garamond',serif;color:var(--teal);font-size:clamp(2.5rem,6vw,4.6rem);font-weight:400;line-height:.95}
+.section-text{max-width:760px;margin:14px auto 0;color:var(--muted);font-size:1rem}
+
+.tours-wrap,.cards-wrap{max-width:1240px;margin:0 auto}
+.tour-grid,.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.tour-card,.simple-card{background:rgba(255,255,255,.52);backdrop-filter:blur(10px);border:1px solid rgba(26,74,74,.08);border-radius:32px;overflow:hidden;box-shadow:var(--shadow);transition:transform .35s ease, box-shadow .35s ease, opacity .45s ease}
+.tour-card:hover,.simple-card:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(17,36,36,.15)}
+.reveal{opacity:0;transform:translateY(30px)}
+.reveal.visible{opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease}
+.tour-photo-wrap,.card-photo-wrap{position:relative;overflow:hidden}
+.tour-photo,.card-photo{width:100%;height:280px;object-fit:cover;transition:transform .8s ease}
+.tour-card:hover .tour-photo,.simple-card:hover .card-photo{transform:scale(1.04)}
+.tour-photo-tag,.card-tag{position:absolute;left:18px;bottom:18px;padding:9px 14px;border-radius:999px;background:rgba(26,74,74,.78);color:#fff;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.tour-body,.card-body{padding:22px}
+.tour-number{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:2rem;line-height:1;margin-bottom:10px}
+.tour-name,.card-title{font-size:1.4rem;color:var(--teal);font-weight:400;margin-bottom:12px}
+.tour-desc,.card-desc{color:var(--muted);min-height:66px}
+.tour-includes-title{margin-top:14px;margin-bottom:10px;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+.includes-list{display:flex;flex-wrap:wrap;gap:8px}
+.includes-pill{padding:8px 11px;border-radius:999px;background:rgba(26,74,74,.06);border:1px solid rgba(26,74,74,.08);font-size:.82rem;color:var(--teal)}
+.tour-prices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.price-box{padding:16px;border-radius:22px;background:rgba(255,255,255,.8);border:1px solid rgba(26,74,74,.08);cursor:pointer;transition:all .25s ease}
+.price-box:hover,.price-box:focus-visible{transform:translateY(-2px);opacity:.88}
+.price-box-label{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.price-box-amount{font-size:2rem;color:var(--teal);line-height:1.1;margin:8px 0 6px}
+.price-box-sub{font-size:.85rem;color:var(--muted)}
+.tour-footer{margin-top:18px;padding-top:16px;border-top:1px solid rgba(26,74,74,.08)}
+.schedule-label{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.schedule-times{display:flex;flex-wrap:wrap;gap:8px}.time-badge{padding:7px 10px;border-radius:999px;background:rgba(184,149,90,.12);color:var(--teal);font-size:.86rem}
+
+.simple-card .card-body{display:flex;flex-direction:column;gap:12px}
+.card-btn{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;padding:12px 16px;border-radius:999px;background:var(--teal);color:#fff;border:none;cursor:pointer;transition:all .25s ease}
+.card-btn:hover{transform:translateY(-2px);background:var(--teal-mid)}
+
+.booking-shell{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+.map-box,.booking-box{background:rgba(255,255,255,.56);backdrop-filter:blur(10px);border:1px solid rgba(26,74,74,.08);border-radius:32px;overflow:hidden;box-shadow:var(--shadow)}
+.map-frame{width:100%;height:100%;min-height:620px;border:0}
+.booking-box{padding:28px}
+.booking-title{font-family:'Cormorant Garamond',serif;color:var(--teal);font-size:2.2rem;font-weight:400;margin-bottom:10px}
+.booking-desc{color:var(--muted);margin-bottom:18px}
+.booking-form{display:grid;gap:14px}.field{display:grid;gap:8px}.field label{font-size:.86rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal)}
+.field input,.field select,.field textarea{width:100%;padding:14px 16px;border-radius:18px;border:1px solid rgba(26,74,74,.12);background:rgba(255,255,255,.84);font:inherit;color:var(--ink);outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(184,149,90,.12)}
+.booking-submit{border:none;border-radius:999px;background:var(--teal);color:#fff;padding:15px 18px;cursor:pointer;transition:all .25s ease}
+.booking-submit:hover{transform:translateY(-2px);background:var(--teal-mid)}
+.note{margin-top:12px;font-size:.92rem;color:var(--muted)}
+
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:90;width:58px;height:58px;border-radius:999px;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.45rem;box-shadow:0 14px 30px rgba(37,211,102,.35)}
+.hidden{display:none!important}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scrollPulse{0%,100%{transform:scaleY(.72);opacity:.45}50%{transform:scaleY(1);opacity:1}}
+
+@media(max-width:1080px){
+  .tour-grid,.cards-grid,.booking-shell{grid-template-columns:1fr 1fr}
+  .booking-shell{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+  .sticky-nav{padding:12px 16px;align-items:flex-start;flex-direction:column}
+  .tour-grid,.cards-grid{grid-template-columns:1fr}
+  .tour-prices{grid-template-columns:1fr}
+  .hero-brand{letter-spacing:.1em}
+  .map-frame{min-height:380px}
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Menú de Actividades</h1>
-    <p>Programa de actividades mensuales para la comunidad</p>
-  </header>
 
-  <main>
-    <section id="actividades">
-      <h2>Actividades disponibles</h2>
-      <div class="actividad">
-        <h3>Workshop de desarrollo empresarial</h3>
-        <p>Capacitación práctica para emprendedores y pequeñas empresas: modelos de negocio, financiamiento y mercados.</p>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Aldea Mayab · Bacalar, Quintana Roo</p>
+    <h1 class="hero-brand">LAGOONA</h1>
+    <p class="hero-curated">Curated Vacation Homes</p>
+    <p class="hero-sub">Guía de huéspedes · Aldea Mayab</p>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">Tours, actividades y gastronomía en Bacalar</p>
+    <a href="#" class="hero-cta" data-target-page="tours">Explorar</a>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div>Descubrir</div>
+</section>
+
+<nav class="sticky-nav">
+  <a class="nav-logo" href="#" data-target-page="tours">LAGOONA</a>
+  <div class="nav-right">
+    <div class="nav-tabs" id="nav-tab-area">
+      <button class="nav-tab-btn active" data-page="tours">Tours & Actividades</button>
+      <button class="nav-tab-btn" data-page="amenidades">Amenidades</button>
+      <button class="nav-tab-btn" data-page="servicios">Servicios</button>
+    </div>
+    <div class="nav-links">
+      <a href="#tours-section">Tours</a>
+      <a href="#amenidades-section">Amenidades</a>
+      <a href="#servicios-section">Servicios</a>
+      <a href="#reservar" class="nav-reserve">Reservar</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="page active" id="page-tours">
+    <div class="section-shell" id="tours-section">
+      <div class="section-intro reveal">
+        <p class="section-kicker">Experiencias</p>
+        <h2 class="section-title">Tours & actividades</h2>
+        <p class="section-text">Conservé la estética editorial, las tipografías, el hero, las tarjetas y las transiciones suaves. La mejora está en la estructura y en quitar eventos inline y la imagen base64 pesada del hero.</p>
       </div>
-      <div class="actividad">
-        <h3>Taller de páginas web y herramientas digitales</h3>
-        <p>Introducción a HTML, CSS, contenidos digitales y cómo usar la web para tu negocio.</p>
+      <div class="tours-wrap">
+        <div class="tour-grid" id="tour-grid"></div>
       </div>
-      <div class="actividad">
-        <h3>Manual de procedimientos laboral</h3>
-        <p>Sesión informativa sobre cómo documentar procesos internos y crear manuales de operaciones.</p>
+    </div>
+  </section>
+
+  <section class="page" id="page-amenidades">
+    <div class="section-shell" id="amenidades-section">
+      <div class="section-intro reveal">
+        <p class="section-kicker">Complementos</p>
+        <h2 class="section-title">Amenidades</h2>
+        <p class="section-text">Quedan conectadas a tu carpeta <strong>img/</strong>. Si alguna no aparece, solo cambia la ruta en el arreglo de datos.</p>
       </div>
-    </section>
+      <div class="cards-wrap">
+        <div class="cards-grid" id="amenities-grid"></div>
+      </div>
+    </div>
+  </section>
 
-    <section id="reservar">
-      <h2>Reserva tu participación</h2>
-      <form action="#" method="post">
-        <label for="nombre">Nombre completo</label>
-        <input type="text" id="nombre" name="nombre" required />
+  <section class="page" id="page-servicios">
+    <div class="section-shell" id="servicios-section">
+      <div class="section-intro reveal">
+        <p class="section-kicker">Hospitalidad</p>
+        <h2 class="section-title">Servicios especiales</h2>
+        <p class="section-text">Mismo look and feel, pero con tarjetas generadas desde datos para que actualizar el contenido sea mucho más rápido.</p>
+      </div>
+      <div class="cards-wrap">
+        <div class="cards-grid" id="services-grid"></div>
+      </div>
+    </div>
+  </section>
 
-        <label for="correo">Correo electrónico</label>
-        <input type="email" id="correo" name="correo" required />
+  <section class="section-shell" id="reservar">
+    <div class="booking-shell">
+      <div class="map-box reveal">
+        <iframe
+          class="map-frame"
+          src="https://www.google.com/maps/d/embed?mid=1bQLaBf2bxeTxZlb0_AOnvi7ETo6s_uM&ehbc=2E312F"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa de recomendaciones en Bacalar"></iframe>
+      </div>
+      <div class="booking-box reveal">
+        <h3 class="booking-title">Reservar por WhatsApp</h3>
+        <p class="booking-desc">El formulario conserva el flujo original, pero ahora genera el mensaje con JavaScript limpio.</p>
+        <form class="booking-form" id="booking-form">
+          <div class="field">
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+          <div class="field">
+            <label for="phone">WhatsApp</label>
+            <input id="phone" name="phone" type="tel" required>
+          </div>
+          <div class="field">
+            <label for="service">Tour o servicio</label>
+            <select id="service" name="service" required></select>
+          </div>
+          <div class="field">
+            <label for="date">Fecha</label>
+            <input id="date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="notes">Notas</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+          </div>
+          <button class="booking-submit" type="submit">Enviar solicitud</button>
+        </form>
+        <p class="note">También puedes tocar cualquier precio o botón de tarjeta para abrir WhatsApp con el servicio ya seleccionado.</p>
+      </div>
+    </div>
+  </section>
+</main>
 
-        <label for="telefono">Teléfono</label>
-        <input type="tel" id="telefono" name="telefono" />
+<a class="wa-float" href="https://wa.me/529842411410" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">✆</a>
 
-        <label for="actividad">Actividad a reservar</label>
-        <select id="actividad" name="actividad" required>
-          <option value="">Selecciona una actividad</option>
-          <option value="desarrollo-empresarial">Workshop de desarrollo empresarial</option>
-          <option value="páginas-web">Taller de páginas web y herramientas digitales</option>
-          <option value="manual-procedimientos">Manual de procedimientos laboral</option>
-        </select>
+<script>
+const WHATSAPP_NUMBER = '529842411410';
 
-        <label for="fecha">Fecha de la actividad</label>
-        <input type="date" id="fecha" name="fecha" required />
+const tours = [
+  {
+    number:'01',
+    name:'Tour Velero',
+    tag:'Vela · 3 hrs',
+    image:'img/tour%20velero.png',
+    desc:'Navega con calma y disfruta una experiencia elegante sobre la laguna.',
+    includes:['Capitán','Kayaks','Hielera','Seguro'],
+    prices:[
+      {label:'Compartido/persona', amount:'$800', sub:'MXN por persona', message:'Tour Velero — $800 compartido'},
+      {label:'Tour Privado', amount:'$4,375', sub:'1–5 pax · +$625/extra', message:'Tour Velero — $4,375 privado'}
+    ],
+    schedule:['8:00','11:00','15:00']
+  },
+  {
+    number:'03',
+    name:'Tour Lancha',
+    tag:'Motor · Clásico · 2 hrs',
+    image:'img/tourlancha.png',
+    desc:'Recorrido por los puntos icónicos: Canal de los Piratas, cenotes e Isla de los Pájaros.',
+    includes:['Capitán','Bebidas','Chalecos','Seguro'],
+    prices:[
+      {label:'Compartido/persona', amount:'$450', sub:'MXN por persona', message:'Tour Lancha — $450 compartido'},
+      {label:'Tour Privado', amount:'$3,750', sub:'Hasta 6 personas', message:'Tour Lancha — $3,750 privado'}
+    ],
+    schedule:['10:00','13:00','16:00']
+  },
+  {
+    number:'04',
+    name:'Tour Pontón',
+    tag:'Comodidad · Social · 3 hrs',
+    image:'img/tourponton.png',
+    desc:'La opción más estable y espaciosa para familias y grupos grandes.',
+    includes:['Capitán','Música BT','Hielera','Chalecos','Seguro'],
+    prices:[
+      {label:'Compartido/persona', amount:'$550', sub:'MXN por persona', message:'Tour Pontón — $550 compartido'},
+      {label:'Tour Privado', amount:'$4,375', sub:'Hasta 10 personas', message:'Tour Pontón — $4,375 privado'}
+    ],
+    schedule:['10:00','13:00','16:00']
+  },
+  {
+    number:'05',
+    name:'Catamarán Recreativo',
+    tag:'Vela · Ecológico · 3 hrs',
+    image:'img/catamaranrecreativo.png',
+    desc:'Una experiencia silenciosa y respetuosa con el ecosistema, ideal para conectar con la naturaleza.',
+    includes:['Capitán','Hielera','Fruta de temporada','Chalecos'],
+    prices:[
+      {label:'Compartido/persona', amount:'$800', sub:'MXN por persona', message:'Catamarán Recreativo — $800 compartido'},
+      {label:'Tour Privado', amount:'$4,000', sub:'Hasta 6 personas', message:'Catamarán Recreativo — $4,000 privado'}
+    ],
+    schedule:['9:00','12:00','15:30']
+  },
+  {
+    number:'06',
+    name:'Catamarán Premium',
+    tag:'Premium · Sunset',
+    image:'img/tourcatamaran.png',
+    desc:'Una salida más especial con mayor confort y una experiencia muy fotogénica.',
+    includes:['Capitán','Hielera','Fruta','Equipo'],
+    prices:[
+      {label:'Tour Privado', amount:'$5,200', sub:'Tarifa sugerida', message:'Catamarán Premium — $5,200 privado'},
+      {label:'Sunset', amount:'$5,800', sub:'Horario premium', message:'Catamarán Premium — $5,800 sunset'}
+    ],
+    schedule:['11:00','16:00']
+  },
+  {
+    number:'07',
+    name:'Tour Paddle',
+    tag:'Activa · Laguna',
+    image:'img/tourpaddle.png',
+    desc:'Recorrido ligero y activo para explorar zonas tranquilas desde otra perspectiva.',
+    includes:['Equipo','Guía','Chaleco'],
+    prices:[
+      {label:'Individual', amount:'$450', sub:'MXN por persona', message:'Tour Paddle — $450 individual'},
+      {label:'Pareja', amount:'$800', sub:'2 personas', message:'Tour Paddle — $800 pareja'}
+    ],
+    schedule:['7:00','9:30','16:00']
+  }
+];
 
-        <button type="submit">Enviar reserva</button>
-      </form>
-    </section>
-  </main>
+const amenities = [
+  {name:'Jet Ski', tag:'Aventura', image:'img/jetski.jpg', desc:'Potencia y diversión sobre la laguna.'},
+  {name:'Snorkel', tag:'Exploración', image:'img/snorkel.jpg', desc:'Equipo para descubrir zonas de agua cristalina.'},
+  {name:'Sillas', tag:'Montaje', image:'img/sillas.jpg', desc:'Complemento ideal para reuniones y eventos.'},
+  {name:'Cuna', tag:'Familias', image:'img/cuna.jpg', desc:'Apoyo práctico para huéspedes con bebés.'},
+  {name:'Super', tag:'Abastecimiento', image:'img/super.jpg', desc:'Ayuda con compras y artículos necesarios.'},
+  {name:'Transfer', tag:'Movilidad', image:'img/transfer.jpg', desc:'Traslados coordinados de llegada y salida.'},
+  {name:'Rápidos', tag:'Excursión', image:'img/rapidos.jpg', desc:'Opciones para explorar puntos cercanos.'}
+];
 
-  <footer>
-    Menú de Actividades AM • © 2026 Grupo Laguna Collection
-  </footer>
+const services = [
+  {name:'Chef privado', tag:'Gastronomía', image:'img/chef.jpeg', desc:'Experiencia culinaria privada en tu estancia.', message:'Quiero información sobre chef privado'},
+  {name:'Masaje', tag:'Bienestar', image:'img/masaje.jpg', desc:'Sesiones de relajación para elevar la experiencia.', message:'Quiero información sobre masaje'},
+  {name:'Cumpleaños', tag:'Celebración', image:'img/cumple.jpg', desc:'Montajes y detalles para momentos especiales.', message:'Quiero información sobre cumpleaños'},
+  {name:'Laguna Grill', tag:'Parrilla', image:'img/lagunagrill.png', desc:'Experiencia de parrilla con atmósfera relajada.', message:'Quiero información sobre Laguna Grill'}
+];
+
+function showPage(page){
+  document.querySelectorAll('.page').forEach(section => section.classList.remove('active'));
+  const target = document.getElementById(`page-${page}`);
+  if(target) target.classList.add('active');
+  document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.page === page));
+  window.scrollTo({top: document.querySelector('.sticky-nav').offsetTop, behavior:'smooth'});
+}
+
+function whatsapp(message){
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+}
+
+function makeTourCard(item){
+  return `
+    <article class="tour-card reveal">
+      <div class="tour-photo-wrap">
+        <img class="tour-photo" src="${item.image}" alt="${item.name}" loading="lazy">
+        <span class="tour-photo-tag">${item.tag}</span>
+      </div>
+      <div class="tour-body">
+        <div class="tour-number">${item.number}</div>
+        <h3 class="tour-name">${item.name}</h3>
+        <p class="tour-desc">${item.desc}</p>
+        <p class="tour-includes-title">Incluye</p>
+        <div class="includes-list">${item.includes.map(p=>`<span class="includes-pill">${p}</span>`).join('')}</div>
+        <div class="tour-prices">${item.prices.map(price=>`
+          <div class="price-box" role="button" tabindex="0" data-message="${price.message}">
+            <p class="price-box-label">${price.label}</p>
+            <p class="price-box-amount">${price.amount}</p>
+            <p class="price-box-sub">${price.sub}</p>
+          </div>`).join('')}</div>
+        <div class="tour-footer">
+          <p class="schedule-label">Horarios</p>
+          <div class="schedule-times">${item.schedule.map(h=>`<span class="time-badge">${h}</span>`).join('')}</div>
+        </div>
+      </div>
+    </article>`;
+}
+
+function makeSimpleCard(item){
+  return `
+    <article class="simple-card reveal">
+      <div class="card-photo-wrap">
+        <img class="card-photo" src="${item.image}" alt="${item.name}" loading="lazy">
+        <span class="card-tag">${item.tag}</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${item.name}</h3>
+        <p class="card-desc">${item.desc}</p>
+        ${item.message ? `<button class="card-btn" type="button" data-message="${item.message}">Solicitar</button>` : ''}
+      </div>
+    </article>`;
+}
+
+function render(){
+  document.getElementById('tour-grid').innerHTML = tours.map(makeTourCard).join('');
+  document.getElementById('amenities-grid').innerHTML = amenities.map(makeSimpleCard).join('');
+  document.getElementById('services-grid').innerHTML = services.map(makeSimpleCard).join('');
+
+  const serviceOptions = [
+    ...tours.map(item => item.name),
+    ...amenities.map(item => item.name),
+    ...services.map(item => item.name)
+  ];
+
+  document.getElementById('service').innerHTML = '<option value="">Selecciona una opción</option>' +
+    serviceOptions.map(item => `<option value="${item}">${item}</option>`).join('');
+
+  setupReveal();
+}
+
+function setupReveal(){
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+document.addEventListener('click', e => {
+  const tab = e.target.closest('.nav-tab-btn');
+  if(tab) showPage(tab.dataset.page);
+
+  const targetPage = e.target.closest('[data-target-page]');
+  if(targetPage){
+    e.preventDefault();
+    showPage(targetPage.dataset.targetPage);
+    setTimeout(() => {
+      document.getElementById('tours-section')?.scrollIntoView({behavior:'smooth'});
+    }, 80);
+  }
+
+  const trigger = e.target.closest('[data-message]');
+  if(trigger) whatsapp(`Hola, me interesa: ${trigger.dataset.message}`);
+});
+
+document.addEventListener('keydown', e => {
+  const box = e.target.closest('.price-box');
+  if(box && (e.key === 'Enter' || e.key === ' ')){
+    e.preventDefault();
+    whatsapp(`Hola, me interesa: ${box.dataset.message}`);
+  }
+});
+
+document.getElementById('booking-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const form = new FormData(e.currentTarget);
+  const msg = [
+    'Hola, quiero reservar.',
+    `Nombre: ${form.get('name')}`,
+    `WhatsApp: ${form.get('phone')}`,
+    `Tour/Servicio: ${form.get('service')}`,
+    `Fecha: ${form.get('date')}`,
+    `Notas: ${form.get('notes') || 'Sin notas adicionales'}`
+  ].join('
+');
+  whatsapp(msg);
+});
+
+render();
+</script>
 </body>
 </html>
